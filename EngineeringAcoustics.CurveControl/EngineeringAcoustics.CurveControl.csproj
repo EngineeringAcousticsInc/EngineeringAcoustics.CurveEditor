@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD4B572F-14AF-48D8-9291-EF5D30D017B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>EngineeringAcoustics.Curve</RootNamespace>
+    <AssemblyName>EngineeringAcoustics.CurveControl</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS3021</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS3021</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CurveControl\AppContainer.cs" />
+    <Compile Include="CurveControl\CommandCollection.cs" />
+    <Compile Include="CurveControl\CommandHistory.cs" />
+    <Compile Include="CurveControl\CommonState.cs" />
+    <Compile Include="CurveControl\CurveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CurveControl\CurveControl.designer.cs">
+      <DependentUpon>CurveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurveControl\CurveControlCommands.cs" />
+    <Compile Include="CurveControl\CurveControlResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurveControlResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CurveControl\EditCurve.cs" />
+    <Compile Include="CurveControl\EditCurveCollection.cs" />
+    <Compile Include="CurveControl\EditCurveKey.cs" />
+    <Compile Include="CurveControl\EditCurveKeyCollection.cs" />
+    <Compile Include="CurveControl\EditCurveKeySelection.cs" />
+    <Compile Include="CurveControl\EditCurveState.cs" />
+    <Compile Include="CurveControl\Enumerations.cs" />
+    <Compile Include="CurveControl\GridControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CurveControl\GridControl.Designer.cs">
+      <DependentUpon>GridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurveControl\ICommand.cs" />
+    <Compile Include="CurveControl\NativeMethods.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CurveControl\CurveControl.resx">
+      <DependentUpon>CurveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurveControl\CurveControlResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurveControlResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Xna.Tools</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurveControl\GridControl.resx">
+      <DependentUpon>GridControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CurveControl\Resources\AddCursor.cur" />
+    <Content Include="CurveControl\Resources\AddKeyImage.png" />
+    <Content Include="CurveControl\Resources\MoveCursor.cur" />
+    <Content Include="CurveControl\Resources\MoveImage.png" />
+    <Content Include="CurveControl\Resources\MoveKeyImage.png" />
+    <Content Include="CurveControl\Resources\PanCursor.cur" />
+    <Content Include="CurveControl\Resources\PanImage.png" />
+    <Content Include="CurveControl\Resources\SelectCursor.cur" />
+    <Content Include="CurveControl\Resources\SelectImage.png" />
+    <Content Include="CurveControl\Resources\ZoomCursor.cur" />
+    <Content Include="CurveControl\Resources\ZoomImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EngineeringAcoustics.Curve\EngineeringAcoustics.Curve.csproj">
+      <Project>{32aa87f7-48d4-4b40-b0be-23fa6cd3e134}</Project>
+      <Name>EngineeringAcoustics.Curve</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
