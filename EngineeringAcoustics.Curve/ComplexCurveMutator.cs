@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EngineeringAcoustics.Curve.Generators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,16 +15,16 @@ namespace EngineeringAcoustics.Curve
 
 		public virtual string Name => Operation.ToString();
 
-		public virtual IFunctionGenerator Function { get; set; } = new FunctionConstant();
+		public virtual IFunctionGenerator Function { get; set; } = new Constant();
 
-		public virtual float Mutate(float position, float input)
+		public virtual double Mutate(double position, double input)
 		{
 			if (Function == null)
 			{
 				return input;
 			}
 
-			float functionValue = Function.Generate(position);
+			double functionValue = Function.Generate(position);
 
 			switch (Operation)
 			{

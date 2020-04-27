@@ -10,6 +10,6 @@ namespace EngineeringAcoustics.Curve
 	{
 		bool IsConstant { get; }
 		string Name { get; }
-		float Mutate(float position, float input);
+		double Mutate(double position, double input);
 	}
 }

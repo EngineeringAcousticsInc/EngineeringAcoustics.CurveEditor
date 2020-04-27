@@ -37,7 +37,7 @@ namespace EngineeringAcoustics.Curve
 		public float Evaluate(float position)
 		{
 			float curveValue = BaseCurve.Evaluate(position);
-			float mutatedValue = Mutator.Mutate(position, curveValue);
+			float mutatedValue = (float)Mutator.Mutate(position, curveValue);
 
 			// todo, handle position loop for mutator?
 
