@@ -41,7 +41,7 @@ namespace EngineeringAcoustics.Curve.Generators
 		public override double Generate(double position)
 		{
 			double nextNormalized = random.NextDouble();
-			double nextScaled = Math.Lerp(Minimum, Maximum, nextNormalized);
+			double nextScaled = MathExtensions.Lerp(Minimum, Maximum, nextNormalized);
 			return nextScaled;
 		}
 	}

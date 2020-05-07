@@ -2,7 +2,7 @@
 
 namespace EngineeringAcoustics.Curve
 {
-	internal static class Math
+	internal static class MathExtensions
 	{
 		public static double Lerp(this double value1, double value2, double amount)
 		{
