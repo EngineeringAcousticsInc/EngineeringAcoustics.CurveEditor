@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using XnaCurve = Microsoft.Xna.Framework.Curve;
 
 namespace EngineeringAcoustics.Curve
@@ -14,11 +9,11 @@ namespace EngineeringAcoustics.Curve
 
 		public ICurve BaseCurve => null;
 
-		ICurve /*ICurve. #clone */Clone()
+		private ICurve /*ICurve. #clone */CloneNyi()
 		{
 			var clone = new SimpleCurve();
 
-			foreach (var key in Keys)
+			foreach (Microsoft.Xna.Framework.CurveKey key in Keys)
 			{
 				clone.Keys.Add(key);
 			}
