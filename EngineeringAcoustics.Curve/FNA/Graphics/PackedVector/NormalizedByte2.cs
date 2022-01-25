@@ -16,18 +16,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedByte2 : IPackedVector<ushort>, IEquatable<NormalizedByte2>
 	{
 		#region Public Properties
-
-		[CLSCompliant(false)]
 		public ushort PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -54,27 +46,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Methods
 
-		public Vector2 ToVector2()
-		{
-			return new Vector2(
-				((sbyte) (packedValue & 0xFF)) / 127.0f,
-				((sbyte) ((packedValue >> 8) & 0xFF)) / 127.0f
+		public Vector2 ToVector2() => new Vector2(
+				((sbyte)(packedValue & 0xFF)) / 127.0f,
+				((sbyte)((packedValue >> 8) & 0xFF)) / 127.0f
 			);
-		}
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y);
 
-		Vector4 IPackedVector.ToVector4()
-		{
-			return new Vector4(ToVector2(), 0.0f, 1.0f);
-		}
+		Vector4 IPackedVector.ToVector4() => new Vector4(ToVector2(), 0.0f, 1.0f);
 
 		#endregion
 
@@ -90,25 +73,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.packedValue == b.packedValue;
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj is NormalizedByte2) && Equals((NormalizedByte2) obj);
-		}
+		public override bool Equals(object obj) => (obj is NormalizedByte2) && Equals((NormalizedByte2)obj);
 
-		public bool Equals(NormalizedByte2 other)
-		{
-			return packedValue == other.packedValue;
-		}
+		public bool Equals(NormalizedByte2 other) => packedValue == other.packedValue;
 
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		#endregion
 
@@ -127,7 +98,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 				) << 8
 			) & 0xFF00;
 
-			return (ushort) (byte2 | byte1);
+			return (ushort)(byte2 | byte1);
 		}
 
 		#endregion

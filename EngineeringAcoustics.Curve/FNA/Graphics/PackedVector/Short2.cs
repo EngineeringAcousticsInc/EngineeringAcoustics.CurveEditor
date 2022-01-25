@@ -16,18 +16,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct Short2 : IPackedVector<uint>, IEquatable<Short2>
 	{
 		#region Public Properties
-
-		[CLSCompliant(false)]
 		public uint PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -54,27 +46,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Methods
 
-		public Vector2 ToVector2()
-		{
-			return new Vector2(
-				(short) (packedValue & 0xFFFF),
-				(short) (packedValue >> 16)
+		public Vector2 ToVector2() => new Vector2(
+				(short)(packedValue & 0xFFFF),
+				(short)(packedValue >> 16)
 			);
-		}
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y);
 
-		Vector4 IPackedVector.ToVector4()
-		{
-			return new Vector4(ToVector2(), 0.0f, 1.0f);
-		}
+		Vector4 IPackedVector.ToVector4() => new Vector4(ToVector2(), 0.0f, 1.0f);
 
 		#endregion
 
@@ -90,37 +73,22 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.packedValue == b.packedValue;
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj is Short2) && Equals((Short2) obj);
-		}
+		public override bool Equals(object obj) => (obj is Short2) && Equals((Short2)obj);
 
-		public bool Equals(Short2 other)
-		{
-			return this == other;
-		}
+		public bool Equals(Short2 other) => this == other;
 
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		#endregion
 
 		#region Private Static Pack Method
 
-		private static uint Pack(float x, float y)
-		{
-			return (uint) (
-				((int) Math.Round(MathHelper.Clamp(x, -32768, 32767)) & 0x0000FFFF) |
-				(((int) Math.Round(MathHelper.Clamp(y, -32768, 32767))) << 16)
+		private static uint Pack(float x, float y) => (uint)(
+				((int)Math.Round(MathHelper.Clamp(x, -32768, 32767)) & 0x0000FFFF) |
+				(((int)Math.Round(MathHelper.Clamp(y, -32768, 32767))) << 16)
 			);
-		}
 
 		#endregion
 	}

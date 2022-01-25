@@ -24,17 +24,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Directly gets or sets the packed representation of the value.
 		/// </summary>
 		/// <value>The packed representation of the value.</value>
-		[CLSCompliant(false)]
 		public ulong PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -79,15 +72,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Expands the packed representation into a Vector4.
 		/// </summary>
 		/// <returns>The expanded vector.</returns>
-		public Vector4 ToVector4()
-		{
-			return new Vector4(
-				HalfTypeHelper.Convert((ushort) packedValue),
-				HalfTypeHelper.Convert((ushort) (packedValue >> 0x10)),
-				HalfTypeHelper.Convert((ushort) (packedValue >> 0x20)),
-				HalfTypeHelper.Convert((ushort) (packedValue >> 0x30))
+		public Vector4 ToVector4() => new Vector4(
+				HalfTypeHelper.Convert((ushort)packedValue),
+				HalfTypeHelper.Convert((ushort)(packedValue >> 0x10)),
+				HalfTypeHelper.Convert((ushort)(packedValue >> 0x20)),
+				HalfTypeHelper.Convert((ushort)(packedValue >> 0x30))
 			);
-		}
 
 		#endregion
 
@@ -97,10 +87,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed representation from a Vector4.
 		/// </summary>
 		/// <param name="vector">The vector to create the packed representation from.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -110,19 +97,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Returns a string representation of the current instance.
 		/// </summary>
 		/// <returns>String that represents the object.</returns>
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		/// <summary>
 		/// Gets the hash code for the current instance.
 		/// </summary>
 		/// <returns>Hash code for the instance.</returns>
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
 		/// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a
@@ -132,10 +113,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public override bool Equals(object obj)
-		{
-			return ((obj is HalfVector4) && Equals((HalfVector4) obj));
-		}
+		public override bool Equals(object obj) => ((obj is HalfVector4) && Equals((HalfVector4)obj));
 
 		/// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a
@@ -145,10 +123,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public bool Equals(HalfVector4 other)
-		{
-			return packedValue.Equals(other.packedValue);
-		}
+		public bool Equals(HalfVector4 other) => packedValue.Equals(other.packedValue);
 
 		/// <summary>
 		/// Compares the current instance of a class to another instance to determine
@@ -183,15 +158,11 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <param name="vector">The vector containing the values to pack.</param>
 		/// <returns>The ulong containing the packed values.</returns>
-		private static ulong Pack(float x, float y, float z, float w)
-		{
-			return (ulong) (
-				((ulong) HalfTypeHelper.Convert(x)) |
-				(((ulong) HalfTypeHelper.Convert(y) << 0x10)) |
-				(((ulong) HalfTypeHelper.Convert(z) << 0x20)) |
-				(((ulong) HalfTypeHelper.Convert(w) << 0x30))
-			);
-		}
+		private static ulong Pack(float x, float y, float z, float w) => HalfTypeHelper.Convert(x) |
+				(((ulong)HalfTypeHelper.Convert(y) << 0x10)) |
+				(((ulong)HalfTypeHelper.Convert(z) << 0x20)) |
+				(((ulong)HalfTypeHelper.Convert(w) << 0x30))
+			;
 
 		#endregion
 	}

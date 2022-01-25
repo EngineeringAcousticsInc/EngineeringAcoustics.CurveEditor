@@ -16,18 +16,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedByte4 : IPackedVector<uint>, IEquatable<NormalizedByte4>
 	{
 		#region Public Properties
-
-		[CLSCompliant(false)]
 		public uint PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -54,24 +46,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Methods
 
-		public Vector4 ToVector4()
-		{
-			return new Vector4(
-				((sbyte) (packedValue & 0xFF)) / 127.0f,
-				((sbyte) ((packedValue >> 8) & 0xFF)) / 127.0f,
-				((sbyte) ((packedValue >> 16) & 0xFF)) / 127.0f,
-				((sbyte) ((packedValue >> 24) & 0xFF)) / 127.0f
+		public Vector4 ToVector4() => new Vector4(
+				((sbyte)(packedValue & 0xFF)) / 127.0f,
+				((sbyte)((packedValue >> 8) & 0xFF)) / 127.0f,
+				((sbyte)((packedValue >> 16) & 0xFF)) / 127.0f,
+				((sbyte)((packedValue >> 24) & 0xFF)) / 127.0f
 			);
-		}
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -87,25 +73,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.packedValue == b.packedValue;
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj is NormalizedByte4) && Equals((NormalizedByte4) obj);
-		}
+		public override bool Equals(object obj) => (obj is NormalizedByte4) && Equals((NormalizedByte4)obj);
 
-		public bool Equals(NormalizedByte4 other)
-		{
-			return packedValue == other.packedValue;
-		}
+		public bool Equals(NormalizedByte4 other) => packedValue == other.packedValue;
 
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		#endregion
 
@@ -114,21 +88,21 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		private static uint Pack(float x, float y, float z, float w)
 		{
 			uint byte4 = (
-				(uint) Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)
+				(uint)Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)
 			) & 0x000000FF;
 			uint byte3 = (
 				(
-					(uint) Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)
+					(uint)Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)
 				) << 8
 			) & 0x0000FF00;
 			uint byte2 = (
 				(
-					(uint) Math.Round(MathHelper.Clamp(z, -1.0f, 1.0f) * 127.0f)
+					(uint)Math.Round(MathHelper.Clamp(z, -1.0f, 1.0f) * 127.0f)
 				) << 16
 			) & 0x00FF0000;
 			uint byte1 = (
 				(
-					(uint) Math.Round(MathHelper.Clamp(w, -1.0f, 1.0f) * 127.0f)
+					(uint)Math.Round(MathHelper.Clamp(w, -1.0f, 1.0f) * 127.0f)
 				) << 24
 			) & 0xFF000000;
 

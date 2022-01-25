@@ -24,17 +24,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Directly gets or sets the packed representation of the value.
 		/// </summary>
 		/// <value>The packed representation of the value.</value>
-		[CLSCompliant(false)]
 		public ulong PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -78,15 +71,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Expands the packed representation into a Vector4.
 		/// </summary>
 		/// <returns>The expanded vector.</returns>
-		public Vector4 ToVector4()
-		{
-			return new Vector4(
-				(short) (packedValue & 0xFFFF),
-				(short) ((packedValue >> 16) & 0xFFFF),
-				(short) ((packedValue >> 32) & 0xFFFF),
-				(short) (packedValue >> 48)
+		public Vector4 ToVector4() => new Vector4(
+				(short)(packedValue & 0xFFFF),
+				(short)((packedValue >> 16) & 0xFFFF),
+				(short)((packedValue >> 32) & 0xFFFF),
+				(short)(packedValue >> 48)
 			);
-		}
 
 		#endregion
 
@@ -96,10 +86,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed representation from a Vector4.
 		/// </summary>
 		/// <param name="vector">The vector to create the packed representation from.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -137,10 +124,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public override bool Equals(object obj)
-		{
-			return (obj is Short4) && Equals((Short4) obj);
-		}
+		public override bool Equals(object obj) => (obj is Short4) && Equals((Short4)obj);
 
 		/// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a
@@ -150,28 +134,19 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public bool Equals(Short4 other)
-		{
-			return this == other;
-		}
+		public bool Equals(Short4 other) => this == other;
 
 		/// <summary>
 		/// Gets the hash code for the current instance.
 		/// </summary>
 		/// <returns>Hash code for the instance.</returns>
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
 		/// <summary>
 		/// Returns a string representation of the current instance.
 		/// </summary>
 		/// <returns>String that represents the object.</returns>
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		#endregion
 
@@ -182,15 +157,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <param name="vector">The vector containing the values to pack.</param>
 		/// <returns>The ulong containing the packed values.</returns>
-		static ulong Pack(float x, float y, float z, float w)
-		{
-			return (ulong) (
-				((long) Math.Round(MathHelper.Clamp(x, -32768, 32767)) & 0xFFFF ) |
-				(((long) Math.Round(MathHelper.Clamp(y, -32768, 32767)) << 16) & 0xFFFF0000) |
-				(((long) Math.Round(MathHelper.Clamp(z, -32768, 32767)) << 32) & 0xFFFF00000000) |
-				((long) Math.Round(MathHelper.Clamp(w, -32768, 32767)) << 48)
+		private static ulong Pack(float x, float y, float z, float w) => (ulong)(
+				((long)Math.Round(MathHelper.Clamp(x, -32768, 32767)) & 0xFFFF) |
+				(((long)Math.Round(MathHelper.Clamp(y, -32768, 32767)) << 16) & 0xFFFF0000) |
+				(((long)Math.Round(MathHelper.Clamp(z, -32768, 32767)) << 32) & 0xFFFF00000000) |
+				((long)Math.Round(MathHelper.Clamp(w, -32768, 32767)) << 48)
 			);
-		}
 
 		#endregion
 	}

@@ -16,18 +16,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedShort2 : IPackedVector<uint>, IEquatable<NormalizedShort2>
 	{
 		#region Public Properties
-
-		[CLSCompliant(false)]
 		public uint PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -59,8 +51,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float maxVal = 0x7FFF;
 
 			return new Vector2(
-				(short) (packedValue & 0xFFFF) / maxVal,
-				(short) (packedValue >> 0x10) / maxVal
+				(short)(packedValue & 0xFFFF) / maxVal,
+				(short)(packedValue >> 0x10) / maxVal
 			);
 		}
 
@@ -68,15 +60,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = Pack(vector.X, vector.Y);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y);
 
-		Vector4 IPackedVector.ToVector4()
-		{
-			return new Vector4(ToVector2(), 0.0f, 1.0f);
-		}
+		Vector4 IPackedVector.ToVector4() => new Vector4(ToVector2(), 0.0f, 1.0f);
 
 		#endregion
 
@@ -92,25 +78,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.Equals(b);
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj is NormalizedShort2) && Equals((NormalizedShort2) obj);
-		}
+		public override bool Equals(object obj) => (obj is NormalizedShort2) && Equals((NormalizedShort2)obj);
 
-		public bool Equals(NormalizedShort2 other)
-		{
-			return packedValue.Equals(other.packedValue);
-		}
+		public bool Equals(NormalizedShort2 other) => packedValue.Equals(other.packedValue);
 
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
 		#endregion
 
@@ -121,16 +95,16 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float max = 0x7FFF;
 			const float min = -max;
 
-			uint word2 = (uint) (
-				(int) MathHelper.Clamp(
-					(float) Math.Round(x * max),
+			uint word2 = (uint)(
+				(int)MathHelper.Clamp(
+					(float)Math.Round(x * max),
 					min,
 					max
 				) & 0xFFFF
 			);
-			uint word1 = (uint) ((
-				(int) MathHelper.Clamp(
-					(float) Math.Round(y * max),
+			uint word1 = (uint)((
+				(int)MathHelper.Clamp(
+					(float)Math.Round(y * max),
 					min,
 					max
 				) & 0xFFFF

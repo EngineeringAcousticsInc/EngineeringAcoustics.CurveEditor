@@ -42,13 +42,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte) (this.packedValue >> 16);
+					return (byte)(packedValue >> 16);
 				}
 			}
-			set
-			{
-				this.packedValue = (this.packedValue & 0xff00ffff) | ((uint) value << 16);
-			}
+			set => packedValue = (packedValue & 0xff00ffff) | ((uint)value << 16);
 		}
 
 		/// <summary>
@@ -60,13 +57,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte) (this.packedValue >> 8);
+					return (byte)(packedValue >> 8);
 				}
 			}
-			set
-			{
-				this.packedValue = (this.packedValue & 0xffff00ff) | ((uint) value << 8);
-			}
+			set => packedValue = (packedValue & 0xffff00ff) | ((uint)value << 8);
 		}
 
 		/// <summary>
@@ -78,13 +72,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte) (this.packedValue);
+					return (byte)(packedValue);
 				}
 			}
-			set
-			{
-				this.packedValue = (this.packedValue & 0xffffff00) | value;
-			}
+			set => packedValue = (packedValue & 0xffffff00) | value;
 		}
 
 		/// <summary>
@@ -96,29 +87,19 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte) (this.packedValue >> 24);
+					return (byte)(packedValue >> 24);
 				}
 			}
-			set
-			{
-				this.packedValue = (this.packedValue & 0x00ffffff) | ((uint) value << 24);
-			}
+			set => packedValue = (packedValue & 0x00ffffff) | ((uint)value << 24);
 		}
 
 		/// <summary>
 		/// Gets or sets packed value of this <see cref="Color"/>.
 		/// </summary>
-		[CLSCompliant(false)]
-		public UInt32 PackedValue
+		public uint PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -1396,18 +1377,12 @@ namespace Microsoft.Xna.Framework
 
 		#region Internal Properties
 
-		internal string DebugDisplayString
-		{
-			get
-			{
-				return string.Concat(
+		internal string DebugDisplayString => string.Concat(
 					R.ToString(), " ",
 					G.ToString(), " ",
 					B.ToString(), " ",
 					A.ToString()
 				);
-			}
-		}
 
 		#endregion
 
@@ -1540,27 +1515,27 @@ namespace Microsoft.Xna.Framework
 			RosyBrown = new Color(0xff8f8fbc);
 			RoyalBlue = new Color(0xffe16941);
 			SaddleBrown = new Color(0xff13458b);
-			Salmon= new Color(0xff7280fa);
+			Salmon = new Color(0xff7280fa);
 			SandyBrown = new Color(0xff60a4f4);
 			SeaGreen = new Color(0xff578b2e);
 			SeaShell = new Color(0xffeef5ff);
 			Sienna = new Color(0xff2d52a0);
 			Silver = new Color(0xffc0c0c0);
 			SkyBlue = new Color(0xffebce87);
-			SlateBlue= new Color(0xffcd5a6a);
-			SlateGray= new Color(0xff908070);
-			Snow= new Color(0xfffafaff);
-			SpringGreen= new Color(0xff7fff00);
-			SteelBlue= new Color(0xffb48246);
-			Tan= new Color(0xff8cb4d2);
-			Teal= new Color(0xff808000);
-			Thistle= new Color(0xffd8bfd8);
-			Tomato= new Color(0xff4763ff);
-			Turquoise= new Color(0xffd0e040);
-			Violet= new Color(0xffee82ee);
-			Wheat= new Color(0xffb3def5);
-			White= new Color(uint.MaxValue);
-			WhiteSmoke= new Color(0xfff5f5f5);
+			SlateBlue = new Color(0xffcd5a6a);
+			SlateGray = new Color(0xff908070);
+			Snow = new Color(0xfffafaff);
+			SpringGreen = new Color(0xff7fff00);
+			SteelBlue = new Color(0xffb48246);
+			Tan = new Color(0xff8cb4d2);
+			Teal = new Color(0xff808000);
+			Thistle = new Color(0xffd8bfd8);
+			Tomato = new Color(0xff4763ff);
+			Turquoise = new Color(0xffd0e040);
+			Violet = new Color(0xffee82ee);
+			Wheat = new Color(0xffb3def5);
+			White = new Color(uint.MaxValue);
+			WhiteSmoke = new Color(0xfff5f5f5);
 			Yellow = new Color(0xff00ffff);
 			YellowGreen = new Color(0xff32cd9a);
 		}
@@ -1577,10 +1552,10 @@ namespace Microsoft.Xna.Framework
 		{
 			packedValue = 0;
 
-			R = (byte) MathHelper.Clamp(color.X * 255, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(color.Y * 255, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(color.Z * 255, Byte.MinValue, Byte.MaxValue);
-			A = (byte) MathHelper.Clamp(color.W * 255, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(color.X * 255, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(color.Y * 255, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(color.Z * 255, byte.MinValue, byte.MaxValue);
+			A = (byte)MathHelper.Clamp(color.W * 255, byte.MinValue, byte.MaxValue);
 		}
 
 		/// <summary>
@@ -1591,9 +1566,9 @@ namespace Microsoft.Xna.Framework
 		{
 			packedValue = 0;
 
-			R = (byte) MathHelper.Clamp(color.X * 255, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(color.Y * 255, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(color.Z * 255, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(color.X * 255, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(color.Y * 255, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(color.Z * 255, byte.MinValue, byte.MaxValue);
 			A = 255;
 		}
 
@@ -1607,9 +1582,9 @@ namespace Microsoft.Xna.Framework
 		{
 			packedValue = 0;
 
-			R = (byte) MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(b * 255, byte.MinValue, byte.MaxValue);
 			A = 255;
 		}
 
@@ -1622,10 +1597,10 @@ namespace Microsoft.Xna.Framework
 		public Color(int r, int g, int b)
 		{
 			packedValue = 0;
-			R = (byte) MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-			A = (byte)255;
+			R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
+			A = 255;
 		}
 
 		/// <summary>
@@ -1638,10 +1613,10 @@ namespace Microsoft.Xna.Framework
 		public Color(int r, int g, int b, int alpha)
 		{
 			packedValue = 0;
-			R = (byte) MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-			A = (byte) MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
+			A = (byte)MathHelper.Clamp(alpha, byte.MinValue, byte.MaxValue);
 		}
 
 		/// <summary>
@@ -1655,10 +1630,10 @@ namespace Microsoft.Xna.Framework
 		{
 			packedValue = 0;
 
-			R = (byte) MathHelper.Clamp(r * 255, Byte.MinValue, Byte.MaxValue);
-			G = (byte) MathHelper.Clamp(g * 255, Byte.MinValue, Byte.MaxValue);
-			B = (byte) MathHelper.Clamp(b * 255, Byte.MinValue, Byte.MaxValue);
-			A = (byte) MathHelper.Clamp(alpha * 255, Byte.MinValue, Byte.MaxValue);
+			R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
+			G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
+			B = (byte)MathHelper.Clamp(b * 255, byte.MinValue, byte.MaxValue);
+			A = (byte)MathHelper.Clamp(alpha * 255, byte.MinValue, byte.MaxValue);
 		}
 
 		#endregion
@@ -1679,28 +1654,19 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="other">The <see cref="Color"/> to compare.</param>
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public bool Equals(Color other)
-		{
-			return this.PackedValue == other.PackedValue;
-		}
+		public bool Equals(Color other) => PackedValue == other.PackedValue;
 
 		/// <summary>
 		/// Gets a <see cref="Vector3"/> representation for this object.
 		/// </summary>
 		/// <returns>A <see cref="Vector3"/> representation for this object.</returns>
-		public Vector3 ToVector3()
-		{
-			return new Vector3(R / 255.0f, G / 255.0f, B / 255.0f);
-		}
+		public Vector3 ToVector3() => new Vector3(R / 255.0f, G / 255.0f, B / 255.0f);
 
 		/// <summary>
 		/// Gets a <see cref="Vector4"/> representation for this object.
 		/// </summary>
 		/// <returns>A <see cref="Vector4"/> representation for this object.</returns>
-		public Vector4 ToVector4()
-		{
-			return new Vector4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
-		}
+		public Vector4 ToVector4() => new Vector4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 
 		#endregion
 
@@ -1717,10 +1683,10 @@ namespace Microsoft.Xna.Framework
 		{
 			amount = MathHelper.Clamp(amount, 0.0f, 1.0f);
 			return new Color(
-				(int) MathHelper.Lerp(value1.R, value2.R, amount),
-				(int) MathHelper.Lerp(value1.G, value2.G, amount),
-				(int) MathHelper.Lerp(value1.B, value2.B, amount),
-				(int) MathHelper.Lerp(value1.A, value2.A, amount)
+				(int)MathHelper.Lerp(value1.R, value2.R, amount),
+				(int)MathHelper.Lerp(value1.G, value2.G, amount),
+				(int)MathHelper.Lerp(value1.B, value2.B, amount),
+				(int)MathHelper.Lerp(value1.A, value2.A, amount)
 			);
 		}
 
@@ -1730,15 +1696,12 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="vector">A <see cref="Vector4"/> representing color.</param>
 		/// <returns>A <see cref="Color"/> which contains premultiplied alpha data.</returns>
-		public static Color FromNonPremultiplied(Vector4 vector)
-		{
-			return new Color(
+		public static Color FromNonPremultiplied(Vector4 vector) => new Color(
 				vector.X * vector.W,
 				vector.Y * vector.W,
 				vector.Z * vector.W,
 				vector.W
 			);
-		}
 
 		/// <summary>
 		/// Translate a non-premultipled alpha <see cref="Color"/> to a <see cref="Color"/>
@@ -1749,15 +1712,12 @@ namespace Microsoft.Xna.Framework
 		/// <param name="b">Blue component value.</param>
 		/// <param name="a">Alpha component value.</param>
 		/// <returns>A <see cref="Color"/> which contains premultiplied alpha data.</returns>
-		public static Color FromNonPremultiplied(int r, int g, int b, int a)
-		{
-			return new Color(
+		public static Color FromNonPremultiplied(int r, int g, int b, int a) => new Color(
 				(r * a / 255),
 				(g * a / 255),
 				(b * a / 255),
 				a
 			);
-		}
 
 		#endregion
 
@@ -1771,10 +1731,10 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>True</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public static bool operator ==(Color a, Color b)
 		{
-			return (	a.A == b.A &&
+			return (a.A == b.A &&
 					a.R == b.R &&
 					a.G == b.G &&
-					a.B == b.B	);
+					a.B == b.B);
 		}
 
 		/// <summary>
@@ -1798,20 +1758,14 @@ namespace Microsoft.Xna.Framework
 		/// Gets the hash code of this <see cref="Color"/>.
 		/// </summary>
 		/// <returns>Hash code of this <see cref="Color"/>.</returns>
-		public override int GetHashCode()
-		{
-			return this.packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
 		/// <summary>
 		/// Compares whether current instance is equal to specified object.
 		/// </summary>
 		/// <param name="obj">The <see cref="Color"/> to compare.</param>
 		/// <returns><c>True</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public override bool Equals(object obj)
-		{
-			return ((obj is Color) && this.Equals((Color) obj));
-		}
+		public override bool Equals(object obj) => ((obj is Color) && Equals((Color)obj));
 
 		/// <summary>
 		/// Multiply <see cref="Color"/> by value.
@@ -1819,15 +1773,12 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value">Source <see cref="Color"/>.</param>
 		/// <param name="scale">Multiplicator.</param>
 		/// <returns>Multiplication result.</returns>
-		public static Color Multiply(Color value, float scale)
-		{
-			return new Color(
-				(int) (value.R * scale),
-				(int) (value.G * scale),
-				(int) (value.B * scale),
-				(int) (value.A * scale)
+		public static Color Multiply(Color value, float scale) => new Color(
+				(int)(value.R * scale),
+				(int)(value.G * scale),
+				(int)(value.B * scale),
+				(int)(value.A * scale)
 			);
-		}
 
 		/// <summary>
 		/// Multiply <see cref="Color"/> by value.
@@ -1838,21 +1789,21 @@ namespace Microsoft.Xna.Framework
 		public static Color operator *(Color value, float scale)
 		{
 			return new Color(
-				(int) (value.R * scale),
-				(int) (value.G * scale),
-				(int) (value.B * scale),
-				(int) (value.A * scale)
+				(int)(value.R * scale),
+				(int)(value.G * scale),
+				(int)(value.B * scale),
+				(int)(value.A * scale)
 			);
 		}
 
 		/// <summary>
-		/// Returns a <see cref="String"/> representation of this <see cref="Color"/> in the format:
+		/// Returns a <see cref="string"/> representation of this <see cref="Color"/> in the format:
 		/// {R:[red] G:[green] B:[blue] A:[alpha]}
 		/// </summary>
-		/// <returns><see cref="String"/> representation of this <see cref="Color"/>.</returns>
+		/// <returns><see cref="string"/> representation of this <see cref="Color"/>.</returns>
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder(25);
+			var sb = new StringBuilder(25);
 			sb.Append("{R:");
 			sb.Append(R);
 			sb.Append(" G:");
@@ -1876,10 +1827,10 @@ namespace Microsoft.Xna.Framework
 		void IPackedVector.PackFromVector4(Vector4 vector)
 		{
 			// Should we round here?
-			R = (byte) (vector.X * 255.0f);
-			G = (byte) (vector.Y * 255.0f);
-			B = (byte) (vector.Z * 255.0f);
-			A = (byte) (vector.W * 255.0f);
+			R = (byte)(vector.X * 255.0f);
+			G = (byte)(vector.Y * 255.0f);
+			B = (byte)(vector.Z * 255.0f);
+			A = (byte)(vector.W * 255.0f);
 		}
 
 		#endregion

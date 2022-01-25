@@ -16,18 +16,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct HalfSingle : IPackedVector<ushort>, IEquatable<HalfSingle>, IPackedVector
 	{
 		#region Public Properties
-
-		[CLSCompliant(false)]
 		public ushort PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
+			get => packedValue;
+			set => packedValue = value;
 		}
 
 		#endregion
@@ -49,48 +41,27 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Methods
 
-		public float ToSingle()
-		{
-			return HalfTypeHelper.Convert(packedValue);
-		}
+		public float ToSingle() => HalfTypeHelper.Convert(packedValue);
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector)
-		{
-			packedValue = HalfTypeHelper.Convert(vector.X);
-		}
+		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = HalfTypeHelper.Convert(vector.X);
 
-		Vector4 IPackedVector.ToVector4()
-		{
-			return new Vector4(ToSingle(), 0.0f, 0.0f, 1.0f);
-		}
+		Vector4 IPackedVector.ToVector4() => new Vector4(ToSingle(), 0.0f, 0.0f, 1.0f);
 
 		#endregion
 
 		#region Public Static Operators and Override Methods
 
-		public override bool Equals(object obj)
-		{
-			return (obj is HalfSingle) && Equals((HalfSingle) obj);
-		}
+		public override bool Equals(object obj) => (obj is HalfSingle) && Equals((HalfSingle)obj);
 
-		public bool Equals(HalfSingle other)
-		{
-			return packedValue == other.packedValue;
-		}
+		public bool Equals(HalfSingle other) => packedValue == other.packedValue;
 
-		public override string ToString()
-		{
-			return packedValue.ToString("X");
-		}
+		public override string ToString() => packedValue.ToString("X");
 
-		public override int GetHashCode()
-		{
-			return packedValue.GetHashCode();
-		}
+		public override int GetHashCode() => packedValue.GetHashCode();
 
 		public static bool operator ==(HalfSingle lhs, HalfSingle rhs)
 		{
