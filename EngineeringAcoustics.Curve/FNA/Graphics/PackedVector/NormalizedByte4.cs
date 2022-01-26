@@ -16,17 +16,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedByte4 : IPackedVector<uint>, IEquatable<NormalizedByte4>
 	{
 		#region Public Properties
-		public uint PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public uint PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private uint packedValue;
 
 		#endregion
 
@@ -34,12 +29,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public NormalizedByte4(Vector4 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		public NormalizedByte4(float x, float y, float z, float w)
 		{
-			packedValue = Pack(x, y, z, w);
+			PackedValue = Pack(x, y, z, w);
 		}
 
 		#endregion
@@ -47,17 +42,17 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		#region Public Methods
 
 		public Vector4 ToVector4() => new Vector4(
-				((sbyte)(packedValue & 0xFF)) / 127.0f,
-				((sbyte)((packedValue >> 8) & 0xFF)) / 127.0f,
-				((sbyte)((packedValue >> 16) & 0xFF)) / 127.0f,
-				((sbyte)((packedValue >> 24) & 0xFF)) / 127.0f
+				((sbyte)(PackedValue & 0xFF)) / 127.0f,
+				((sbyte)((PackedValue >> 8) & 0xFF)) / 127.0f,
+				((sbyte)((PackedValue >> 16) & 0xFF)) / 127.0f,
+				((sbyte)((PackedValue >> 24) & 0xFF)) / 127.0f
 			);
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -65,21 +60,21 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public static bool operator !=(NormalizedByte4 a, NormalizedByte4 b)
 		{
-			return a.packedValue != b.packedValue;
+			return a.PackedValue != b.PackedValue;
 		}
 
 		public static bool operator ==(NormalizedByte4 a, NormalizedByte4 b)
 		{
-			return a.packedValue == b.packedValue;
+			return a.PackedValue == b.PackedValue;
 		}
 
-		public override bool Equals(object obj) => (obj is NormalizedByte4) && Equals((NormalizedByte4)obj);
+		public override bool Equals(object obj) => (obj is NormalizedByte4 byte4) && Equals(byte4);
 
-		public bool Equals(NormalizedByte4 other) => packedValue == other.packedValue;
+		public bool Equals(NormalizedByte4 other) => PackedValue == other.PackedValue;
 
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		#endregion
 

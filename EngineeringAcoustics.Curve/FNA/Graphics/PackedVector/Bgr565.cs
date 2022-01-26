@@ -24,17 +24,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <summary>
 		/// Gets and sets the packed value.
 		/// </summary>
-		public ushort PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public ushort PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private ushort packedValue;
 
 		#endregion
 
@@ -48,7 +43,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <param name="z">The z component</param>
 		public Bgr565(float x, float y, float z)
 		{
-			packedValue = Pack(x, y, z);
+			PackedValue = Pack(x, y, z);
 		}
 
 		/// <summary>
@@ -59,7 +54,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </param>
 		public Bgr565(Vector3 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z);
 		}
 
 		#endregion
@@ -71,9 +66,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <returns>The packed vector in Vector3 format</returns>
 		public Vector3 ToVector3() => new Vector3(
-				(packedValue >> 11) / 31.0f,
-				((packedValue >> 5) & 0x3F) / 63.0f,
-				(packedValue & 0x1F) / 31.0f
+				(PackedValue >> 11) / 31.0f,
+				((PackedValue >> 5) & 0x3F) / 63.0f,
+				(PackedValue & 0x1F) / 31.0f
 			);
 
 		#endregion
@@ -101,35 +96,35 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <param name="obj">The object to compare.</param>
 		/// <returns>True if the object is equal to the packed vector.</returns>
-		public override bool Equals(object obj) => (obj is Bgr565) && Equals((Bgr565)obj);
+		public override bool Equals(object obj) => (obj is Bgr565 bgr) && Equals(bgr);
 
 		/// <summary>
 		/// Compares another Bgr565 packed vector with the packed vector.
 		/// </summary>
 		/// <param name="other">The Bgr565 packed vector to compare.</param>
 		/// <returns>True if the packed vectors are equal.</returns>
-		public bool Equals(Bgr565 other) => packedValue == other.packedValue;
+		public bool Equals(Bgr565 other) => PackedValue == other.PackedValue;
 
 		/// <summary>
 		/// Gets a string representation of the packed vector.
 		/// </summary>
 		/// <returns>A string representation of the packed vector.</returns>
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		/// <summary>
 		/// Gets a hash code of the packed vector.
 		/// </summary>
 		/// <returns>The hash code for the packed vector.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		public static bool operator ==(Bgr565 lhs, Bgr565 rhs)
 		{
-			return lhs.packedValue == rhs.packedValue;
+			return lhs.PackedValue == rhs.PackedValue;
 		}
 
 		public static bool operator !=(Bgr565 lhs, Bgr565 rhs)
 		{
-			return lhs.packedValue != rhs.packedValue;
+			return lhs.PackedValue != rhs.PackedValue;
 		}
 
 		#endregion

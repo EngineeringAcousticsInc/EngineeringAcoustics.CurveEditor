@@ -38,7 +38,8 @@ namespace Microsoft.Xna.Framework.Design
 		public override bool CanConvertFrom(
 			ITypeDescriptorContext context,
 			Type sourceType
-		) {
+		)
+		{
 			if (supportStringConvert && sourceType == typeof(string))
 			{
 				return true;
@@ -49,7 +50,8 @@ namespace Microsoft.Xna.Framework.Design
 		public override bool CanConvertTo(
 			ITypeDescriptorContext context,
 			Type destinationType
-		) {
+		)
+		{
 			if (supportStringConvert && destinationType == typeof(string))
 			{
 				return true;
@@ -59,23 +61,17 @@ namespace Microsoft.Xna.Framework.Design
 
 		public override bool GetCreateInstanceSupported(
 			ITypeDescriptorContext context
-		) {
-			return true;
-		}
+		) => true;
 
 		public override PropertyDescriptorCollection GetProperties(
 			ITypeDescriptorContext context,
-			Object value,
+			object value,
 			Attribute[] attributes
-		) {
-			return propertyDescriptions;
-		}
+		) => propertyDescriptions;
 
 		public override bool GetPropertiesSupported(
 			ITypeDescriptorContext context
-		) {
-			return true;
-		}
+		) => true;
 
 		#endregion
 	}

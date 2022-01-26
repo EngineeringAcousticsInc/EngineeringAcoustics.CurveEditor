@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace EngineeringAcoustics.Curve.Generators
 {
 	public abstract class WaveGenerator : FunctionGeneratorBase
@@ -19,7 +15,7 @@ namespace EngineeringAcoustics.Curve.Generators
 		{
 			double offsetPosition = position + Offset;
 			double normalizedValue = GenerateNormalizedWave(offsetPosition);
-			double scaledValue = 0; // #generate
+			double scaledValue = normalizedValue * WaveAmplitude; // #generate
 			return scaledValue;
 		}
 	}

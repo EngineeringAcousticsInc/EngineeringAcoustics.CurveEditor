@@ -42,10 +42,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte)(packedValue >> 16);
+					return (byte)(_packedValue >> 16);
 				}
 			}
-			set => packedValue = (packedValue & 0xff00ffff) | ((uint)value << 16);
+			set => _packedValue = (_packedValue & 0xff00ffff) | ((uint)value << 16);
 		}
 
 		/// <summary>
@@ -57,10 +57,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte)(packedValue >> 8);
+					return (byte)(_packedValue >> 8);
 				}
 			}
-			set => packedValue = (packedValue & 0xffff00ff) | ((uint)value << 8);
+			set => _packedValue = (_packedValue & 0xffff00ff) | ((uint)value << 8);
 		}
 
 		/// <summary>
@@ -72,10 +72,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte)(packedValue);
+					return (byte)_packedValue;
 				}
 			}
-			set => packedValue = (packedValue & 0xffffff00) | value;
+			set => _packedValue = (_packedValue & 0xffffff00) | value;
 		}
 
 		/// <summary>
@@ -87,10 +87,10 @@ namespace Microsoft.Xna.Framework
 			{
 				unchecked
 				{
-					return (byte)(packedValue >> 24);
+					return (byte)(_packedValue >> 24);
 				}
 			}
-			set => packedValue = (packedValue & 0x00ffffff) | ((uint)value << 24);
+			set => _packedValue = (_packedValue & 0x00ffffff) | ((uint)value << 24);
 		}
 
 		/// <summary>
@@ -98,8 +98,8 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		public uint PackedValue
 		{
-			get => packedValue;
-			set => packedValue = value;
+			get => _packedValue;
+			set => _packedValue = value;
 		}
 
 		#endregion
@@ -1389,7 +1389,7 @@ namespace Microsoft.Xna.Framework
 		#region Private Variables
 
 		// ARGB. Keep this name as it is used by XNA games in reflection!
-		private uint packedValue;
+		private uint _packedValue;
 
 		#endregion
 
@@ -1550,7 +1550,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="color">A <see cref="Vector4"/> representing a color.</param>
 		public Color(Vector4 color)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 
 			R = (byte)MathHelper.Clamp(color.X * 255, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(color.Y * 255, byte.MinValue, byte.MaxValue);
@@ -1564,7 +1564,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="color">A <see cref="Vector3"/> representing a color.</param>
 		public Color(Vector3 color)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 
 			R = (byte)MathHelper.Clamp(color.X * 255, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(color.Y * 255, byte.MinValue, byte.MaxValue);
@@ -1580,7 +1580,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="b">Blue component value from 0.0f to 1.0f.</param>
 		public Color(float r, float g, float b)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 
 			R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
@@ -1596,7 +1596,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="b">Blue component value from 0 to 255.</param>
 		public Color(int r, int g, int b)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 			R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
 			B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
@@ -1612,7 +1612,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="alpha">Alpha component value from 0 to 255.</param>
 		public Color(int r, int g, int b, int alpha)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 			R = (byte)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
 			B = (byte)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
@@ -1628,7 +1628,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="alpha">Alpha component value from 0.0f to 1.0f.</param>
 		public Color(float r, float g, float b, float alpha)
 		{
-			packedValue = 0;
+			_packedValue = 0;
 
 			R = (byte)MathHelper.Clamp(r * 255, byte.MinValue, byte.MaxValue);
 			G = (byte)MathHelper.Clamp(g * 255, byte.MinValue, byte.MaxValue);
@@ -1642,7 +1642,7 @@ namespace Microsoft.Xna.Framework
 
 		private Color(uint packedValue)
 		{
-			this.packedValue = packedValue;
+			_packedValue = packedValue;
 		}
 
 		#endregion
@@ -1713,9 +1713,9 @@ namespace Microsoft.Xna.Framework
 		/// <param name="a">Alpha component value.</param>
 		/// <returns>A <see cref="Color"/> which contains premultiplied alpha data.</returns>
 		public static Color FromNonPremultiplied(int r, int g, int b, int a) => new Color(
-				(r * a / 255),
-				(g * a / 255),
-				(b * a / 255),
+				r * a / 255,
+				g * a / 255,
+				b * a / 255,
 				a
 			);
 
@@ -1731,10 +1731,10 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>True</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public static bool operator ==(Color a, Color b)
 		{
-			return (a.A == b.A &&
+			return a.A == b.A &&
 					a.R == b.R &&
 					a.G == b.G &&
-					a.B == b.B);
+					a.B == b.B;
 		}
 
 		/// <summary>
@@ -1758,14 +1758,14 @@ namespace Microsoft.Xna.Framework
 		/// Gets the hash code of this <see cref="Color"/>.
 		/// </summary>
 		/// <returns>Hash code of this <see cref="Color"/>.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => _packedValue.GetHashCode();
 
 		/// <summary>
 		/// Compares whether current instance is equal to specified object.
 		/// </summary>
 		/// <param name="obj">The <see cref="Color"/> to compare.</param>
 		/// <returns><c>True</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public override bool Equals(object obj) => ((obj is Color) && Equals((Color)obj));
+		public override bool Equals(object obj) => (obj is Color color) && Equals(color);
 
 		/// <summary>
 		/// Multiply <see cref="Color"/> by value.
@@ -1804,15 +1804,15 @@ namespace Microsoft.Xna.Framework
 		public override string ToString()
 		{
 			var sb = new StringBuilder(25);
-			sb.Append("{R:");
-			sb.Append(R);
-			sb.Append(" G:");
-			sb.Append(G);
-			sb.Append(" B:");
-			sb.Append(B);
-			sb.Append(" A:");
-			sb.Append(A);
-			sb.Append("}");
+			_ = sb.Append("{R:");
+			_ = sb.Append(R);
+			_ = sb.Append(" G:");
+			_ = sb.Append(G);
+			_ = sb.Append(" B:");
+			_ = sb.Append(B);
+			_ = sb.Append(" A:");
+			_ = sb.Append(A);
+			_ = sb.Append("}");
 			return sb.ToString();
 		}
 

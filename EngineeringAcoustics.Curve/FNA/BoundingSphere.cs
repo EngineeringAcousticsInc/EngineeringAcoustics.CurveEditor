@@ -32,16 +32,10 @@ namespace Microsoft.Xna.Framework
 	{
 		#region Internal Properties
 
-		internal string DebugDisplayString
-		{
-			get
-			{
-				return string.Concat(
+		internal string DebugDisplayString => string.Concat(
 					"Center( ", Center.DebugDisplayString, " ) \r\n",
 					"Radius( ", Radius.ToString(), " ) "
 				);
-			}
-		}
 
 		#endregion
 
@@ -68,8 +62,8 @@ namespace Microsoft.Xna.Framework
 		/// <param name="radius">The sphere radius.</param>
 		public BoundingSphere(Vector3 center, float radius)
 		{
-			this.Center = center;
-			this.Radius = radius;
+			Center = center;
+			Radius = radius;
 		}
 
 		#endregion
@@ -83,18 +77,20 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="BoundingSphere"/>.</returns>
 		public BoundingSphere Transform(Matrix matrix)
 		{
-			BoundingSphere sphere = new BoundingSphere();
-			sphere.Center = Vector3.Transform(this.Center, matrix);
-			sphere.Radius = this.Radius *
+			var sphere = new BoundingSphere
+			{
+				Center = Vector3.Transform(Center, matrix),
+				Radius = Radius *
 				(
-					(float) Math.Sqrt((double) Math.Max(
-						((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13),
+					(float)Math.Sqrt(Math.Max(
+						(matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12) + (matrix.M13 * matrix.M13),
 						Math.Max(
-							((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23),
-							((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))
+							(matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22) + (matrix.M23 * matrix.M23),
+							(matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32) + (matrix.M33 * matrix.M33))
 						)
 					)
-				);
+				)
+			};
 			return sphere;
 		}
 
@@ -105,14 +101,14 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Transformed <see cref="BoundingSphere"/> as an output parameter.</param>
 		public void Transform(ref Matrix matrix, out BoundingSphere result)
 		{
-			result.Center = Vector3.Transform(this.Center, matrix);
-			result.Radius = this.Radius *
+			result.Center = Vector3.Transform(Center, matrix);
+			result.Radius = Radius *
 				(
-					(float) Math.Sqrt((double) Math.Max(
-						((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13),
+					(float)Math.Sqrt(Math.Max(
+						(matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12) + (matrix.M13 * matrix.M13),
 						Math.Max(
-							((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23),
-							((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))
+							(matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22) + (matrix.M23 * matrix.M23),
+							(matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32) + (matrix.M33 * matrix.M33))
 						)
 					)
 				);
@@ -123,30 +119,21 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="box">The box for testing.</param>
 		/// <param name="result">The containment type as an output parameter.</param>
-		public void Contains(ref BoundingBox box, out ContainmentType result)
-		{
-			result = this.Contains(box);
-		}
+		public void Contains(ref BoundingBox box, out ContainmentType result) => result = Contains(box);
 
 		/// <summary>
 		/// Test if a sphere is fully inside, outside, or just intersecting the sphere.
 		/// </summary>
 		/// <param name="sphere">The other sphere for testing.</param>
 		/// <param name="result">The containment type as an output parameter.</param>
-		public void Contains(ref BoundingSphere sphere, out ContainmentType result)
-		{
-			result = Contains(sphere);
-		}
+		public void Contains(ref BoundingSphere sphere, out ContainmentType result) => result = Contains(sphere);
 
 		/// <summary>
 		/// Test if a point is fully inside, outside, or just intersecting the sphere.
 		/// </summary>
 		/// <param name="point">The vector in 3D-space for testing.</param>
 		/// <param name="result">The containment type as an output parameter.</param>
-		public void Contains(ref Vector3 point, out ContainmentType result)
-		{
-			result = Contains(point);
-		}
+		public void Contains(ref Vector3 point, out ContainmentType result) => result = Contains(point);
 
 		/// <summary>
 		/// Test if a bounding box is fully inside, outside, or just intersecting the sphere.
@@ -159,7 +146,7 @@ namespace Microsoft.Xna.Framework
 			bool inside = true;
 			foreach (Vector3 corner in box.GetCorners())
 			{
-				if (this.Contains(corner) == ContainmentType.Disjoint)
+				if (Contains(corner) == ContainmentType.Disjoint)
 				{
 					inside = false;
 					break;
@@ -223,7 +210,7 @@ namespace Microsoft.Xna.Framework
 			Vector3[] corners = frustum.GetCorners();
 			foreach (Vector3 corner in corners)
 			{
-				if (this.Contains(corner) == ContainmentType.Disjoint)
+				if (Contains(corner) == ContainmentType.Disjoint)
 				{
 					inside = false;
 					break;
@@ -254,8 +241,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The containment type.</returns>
 		public ContainmentType Contains(BoundingSphere sphere)
 		{
-			float sqDistance;
-			Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+			Vector3.DistanceSquared(ref sphere.Center, ref Center, out float sqDistance);
 
 			if (sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius))
 			{
@@ -276,8 +262,7 @@ namespace Microsoft.Xna.Framework
 		public ContainmentType Contains(Vector3 point)
 		{
 			float sqRadius = Radius * Radius;
-			float sqDistance;
-			Vector3.DistanceSquared(ref point, ref Center, out sqDistance);
+			Vector3.DistanceSquared(ref point, ref Center, out float sqDistance);
 
 			if (sqDistance > sqRadius)
 			{
@@ -297,8 +282,8 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public bool Equals(BoundingSphere other)
 		{
-			return (	Center == other.Center &&
-					Radius == other.Radius	);
+			return Center == other.Center &&
+					Radius == other.Radius;
 		}
 
 		#endregion
@@ -312,8 +297,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The new <see cref="BoundingSphere"/>.</returns>
 		public static BoundingSphere CreateFromBoundingBox(BoundingBox box)
 		{
-			BoundingSphere result;
-			CreateFromBoundingBox(ref box, out result);
+			CreateFromBoundingBox(ref box, out BoundingSphere result);
 			return result;
 		}
 
@@ -325,7 +309,7 @@ namespace Microsoft.Xna.Framework
 		public static void CreateFromBoundingBox(ref BoundingBox box, out BoundingSphere result)
 		{
 			// Find the center of the box.
-			Vector3 center = new Vector3(
+			var center = new Vector3(
 				(box.Min.X + box.Max.X) / 2.0f,
 				(box.Min.Y + box.Max.Y) / 2.0f,
 				(box.Min.Z + box.Max.Z) / 2.0f
@@ -342,10 +326,7 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="frustum">The frustum to create the sphere from.</param>
 		/// <returns>The new <see cref="BoundingSphere"/>.</returns>
-		public static BoundingSphere CreateFromFrustum(BoundingFrustum frustum)
-		{
-			return CreateFromPoints(frustum.GetCorners());
-		}
+		public static BoundingSphere CreateFromFrustum(BoundingFrustum frustum) => CreateFromPoints(frustum.GetCorners());
 
 		/// <summary>
 		/// Creates the smallest <see cref="BoundingSphere"/> that can contain a specified list of points in 3D-space.
@@ -361,7 +342,7 @@ namespace Microsoft.Xna.Framework
 
 			// From "Real-Time Collision Detection" (Page 89)
 
-			Vector3 minx = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+			var minx = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 			Vector3 maxx = -minx;
 			Vector3 miny = minx;
 			Vector3 maxy = -minx;
@@ -424,7 +405,7 @@ namespace Microsoft.Xna.Framework
 				max = maxz;
 				min = minz;
 			}
-			
+
 			Vector3 center = (min + max) * 0.5f;
 			float radius = Vector3.Distance(max, center);
 
@@ -435,13 +416,13 @@ namespace Microsoft.Xna.Framework
 			float sqRadius = radius * radius;
 			foreach (Vector3 pt in points)
 			{
-				Vector3 diff = (pt - center);
+				Vector3 diff = pt - center;
 				float sqDist = diff.LengthSquared();
 				if (sqDist > sqRadius)
 				{
-					float distance = (float) Math.Sqrt(sqDist); // equal to diff.Length();
+					float distance = (float)Math.Sqrt(sqDist); // equal to diff.Length();
 					Vector3 direction = diff / distance;
-					Vector3 G = center - radius * direction;
+					Vector3 G = center - (radius * direction);
 					center = (G + pt) / 2;
 					radius = Vector3.Distance(pt, center);
 					sqRadius = radius * radius;
@@ -459,8 +440,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The new <see cref="BoundingSphere"/>.</returns>
 		public static BoundingSphere CreateMerged(BoundingSphere original, BoundingSphere additional)
 		{
-			BoundingSphere result;
-			CreateMerged(ref original, ref additional, out result);
+			CreateMerged(ref original, ref additional, out BoundingSphere result);
 			return result;
 		}
 
@@ -474,8 +454,9 @@ namespace Microsoft.Xna.Framework
 			ref BoundingSphere original,
 			ref BoundingSphere additional,
 			out BoundingSphere result
-		) {
-			Vector3 ocenterToaCenter = Vector3.Subtract(additional.Center, original.Center);
+		)
+		{
+			var ocenterToaCenter = Vector3.Subtract(additional.Center, original.Center);
 			float distance = ocenterToaCenter.Length();
 
 			// Intersect
@@ -501,15 +482,16 @@ namespace Microsoft.Xna.Framework
 			float Rightradius = Math.Max(original.Radius + distance, additional.Radius);
 
 			// oCenterToResultCenter
-			ocenterToaCenter = ocenterToaCenter +
-				(
-					((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length()))
+			ocenterToaCenter += (
+					(leftRadius - Rightradius) / (2 * ocenterToaCenter.Length())
 					* ocenterToaCenter
 				);
 
-			result = new BoundingSphere();
-			result.Center = original.Center + ocenterToaCenter;
-			result.Radius = (leftRadius + Rightradius) / 2;
+			result = new BoundingSphere
+			{
+				Center = original.Center + ocenterToaCenter,
+				Radius = (leftRadius + Rightradius) / 2
+			};
 		}
 
 		/// <summary>
@@ -517,25 +499,16 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="box">The box for testing.</param>
 		/// <returns><c>true</c> if <see cref="BoundingBox"/> intersects with this sphere; <c>false</c> otherwise.</returns>
-		public bool Intersects(BoundingBox box)
-		{
-			return box.Intersects(this);
-		}
+		public bool Intersects(BoundingBox box) => box.Intersects(this);
 
 		/// <summary>
 		/// Gets whether or not a specified <see cref="BoundingBox"/> intersects with this sphere.
 		/// </summary>
 		/// <param name="box">The box for testing.</param>
 		/// <param name="result"><c>true</c> if <see cref="BoundingBox"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
-		public void Intersects(ref BoundingBox box, out bool result)
-		{
-			box.Intersects(ref this, out result);
-		}
+		public void Intersects(ref BoundingBox box, out bool result) => box.Intersects(ref this, out result);
 
-		public bool Intersects(BoundingFrustum frustum)
-		{
-			return frustum.Intersects(this);
-		}
+		public bool Intersects(BoundingFrustum frustum) => frustum.Intersects(this);
 
 		/// <summary>
 		/// Gets whether or not the other <see cref="BoundingSphere"/> intersects with this sphere.
@@ -544,8 +517,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>true</c> if other <see cref="BoundingSphere"/> intersects with this sphere; <c>false</c> otherwise.</returns>
 		public bool Intersects(BoundingSphere sphere)
 		{
-			bool result;
-			Intersects(ref sphere, out result);
+			Intersects(ref sphere, out bool result);
 			return result;
 		}
 
@@ -556,8 +528,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result"><c>true</c> if other <see cref="BoundingSphere"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
 		public void Intersects(ref BoundingSphere sphere, out bool result)
 		{
-			float sqDistance;
-			Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+			Vector3.DistanceSquared(ref sphere.Center, ref Center, out float sqDistance);
 			result = !(sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius));
 		}
 
@@ -566,20 +537,14 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="ray">The ray for testing.</param>
 		/// <returns>Distance of ray intersection or <c>null</c> if there is no intersection.</returns>
-		public float? Intersects(Ray ray)
-		{
-			return ray.Intersects(this);
-		}
+		public float? Intersects(Ray ray) => ray.Intersects(this);
 
 		/// <summary>
 		/// Gets whether or not a specified <see cref="Ray"/> intersects with this sphere.
 		/// </summary>
 		/// <param name="ray">The ray for testing.</param>
 		/// <param name="result">Distance of ray intersection or <c>null</c> if there is no intersection as an output parameter.</param>
-		public void Intersects(ref Ray ray, out float? result)
-		{
-			ray.Intersects(ref this, out result);
-		}
+		public void Intersects(ref Ray ray, out float? result) => ray.Intersects(ref this, out result);
 
 		/// <summary>
 		/// Gets whether or not a specified <see cref="Plane"/> intersects with this sphere.
@@ -588,9 +553,8 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Type of intersection.</returns>
 		public PlaneIntersectionType Intersects(Plane plane)
 		{
-			PlaneIntersectionType result = default(PlaneIntersectionType);
 			// TODO: We might want to inline this for performance reasons.
-			this.Intersects(ref plane, out result);
+			Intersects(ref plane, out PlaneIntersectionType result);
 			return result;
 		}
 
@@ -601,22 +565,12 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Type of intersection as an output parameter.</param>
 		public void Intersects(ref Plane plane, out PlaneIntersectionType result)
 		{
-			float distance = default(float);
 			// TODO: We might want to inline this for performance reasons.
-			Vector3.Dot(ref plane.Normal, ref this.Center, out distance);
+			Vector3.Dot(ref plane.Normal, ref Center, out float distance);
 			distance += plane.D;
-			if (distance > this.Radius)
-			{
-				result = PlaneIntersectionType.Front;
-			}
-			else if (distance < -this.Radius)
-			{
-				result = PlaneIntersectionType.Back;
-			}
-			else
-			{
-				result = PlaneIntersectionType.Intersecting;
-			}
+			result = distance > Radius
+				? PlaneIntersectionType.Front
+				: distance < -Radius ? PlaneIntersectionType.Back : PlaneIntersectionType.Intersecting;
 		}
 
 		#endregion
@@ -624,36 +578,30 @@ namespace Microsoft.Xna.Framework
 		#region Public Static Operators and Override Methods
 
 		/// <summary>
-		/// Compares whether current instance is equal to specified <see cref="Object"/>.
+		/// Compares whether current instance is equal to specified <see cref="object"/>.
 		/// </summary>
-		/// <param name="obj">The <see cref="Object"/> to compare.</param>
+		/// <param name="obj">The <see cref="object"/> to compare.</param>
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public override bool Equals(object obj)
-		{
-			return (obj is BoundingSphere) && Equals((BoundingSphere) obj);
-		}
+		public override bool Equals(object obj) => (obj is BoundingSphere sphere) && Equals(sphere);
 
 		/// <summary>
 		/// Gets the hash code of this <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <returns>Hash code of this <see cref="BoundingSphere"/>.</returns>
-		public override int GetHashCode()
-		{
-			return this.Center.GetHashCode() + this.Radius.GetHashCode();
-		}
+		public override int GetHashCode() => Center.GetHashCode() + Radius.GetHashCode();
 
 		/// <summary>
-		/// Returns a <see cref="String"/> representation of this <see cref="BoundingSphere"/> in the format:
+		/// Returns a <see cref="string"/> representation of this <see cref="BoundingSphere"/> in the format:
 		/// {Center:[<see cref="Center"/>] Radius:[<see cref="Radius"/>]}
 		/// </summary>
-		/// <returns>A <see cref="String"/> representation of this <see cref="BoundingSphere"/>.</returns>
+		/// <returns>A <see cref="string"/> representation of this <see cref="BoundingSphere"/>.</returns>
 		public override string ToString()
 		{
-			return (
+			return
 				"{Center:" + Center.ToString() +
 				" Radius:" + Radius.ToString() +
 				"}"
-			);
+			;
 		}
 
 		/// <summary>

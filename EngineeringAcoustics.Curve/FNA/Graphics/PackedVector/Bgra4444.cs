@@ -24,17 +24,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <summary>
 		/// Gets and sets the packed value.
 		/// </summary>
-		public ushort PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public ushort PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private ushort packedValue;
 
 		#endregion
 
@@ -49,7 +44,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <param name="w">The w component</param>
 		public Bgra4444(float x, float y, float z, float w)
 		{
-			packedValue = Pack(x, y, z, w);
+			PackedValue = Pack(x, y, z, w);
 		}
 
 		/// <summary>
@@ -60,7 +55,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </param>
 		public Bgra4444(Vector4 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		#endregion
@@ -72,10 +67,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <returns>The packed vector in Vector4 format</returns>
 		public Vector4 ToVector4() => new Vector4(
-				((packedValue >> 8) & 0x0F) / 15.0f,
-				((packedValue >> 4) & 0x0F) / 15.0f,
-				(packedValue & 0x0F) / 15.0f,
-				(packedValue >> 12) / 15.0f
+				((PackedValue >> 8) & 0x0F) / 15.0f,
+				((PackedValue >> 4) & 0x0F) / 15.0f,
+				(PackedValue & 0x0F) / 15.0f,
+				(PackedValue >> 12) / 15.0f
 			);
 
 		#endregion
@@ -86,7 +81,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed vector from a Vector4.
 		/// </summary>
 		/// <param name="vector">Vector containing the components.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -97,35 +92,35 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <param name="obj">The object to compare.</param>
 		/// <returns>True if the object is equal to the packed vector.</returns>
-		public override bool Equals(object obj) => (obj is Bgra4444) && Equals((Bgra4444)obj);
+		public override bool Equals(object obj) => (obj is Bgra4444 bgra) && Equals(bgra);
 
 		/// <summary>
 		/// Compares another Bgra4444 packed vector with the packed vector.
 		/// </summary>
 		/// <param name="other">The Bgra4444 packed vector to compare.</param>
 		/// <returns>True if the packed vectors are equal.</returns>
-		public bool Equals(Bgra4444 other) => packedValue == other.packedValue;
+		public bool Equals(Bgra4444 other) => PackedValue == other.PackedValue;
 
 		/// <summary>
 		/// Gets a string representation of the packed vector.
 		/// </summary>
 		/// <returns>A string representation of the packed vector.</returns>
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		/// <summary>
 		/// Gets a hash code of the packed vector.
 		/// </summary>
 		/// <returns>The hash code for the packed vector.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		public static bool operator ==(Bgra4444 lhs, Bgra4444 rhs)
 		{
-			return lhs.packedValue == rhs.packedValue;
+			return lhs.PackedValue == rhs.PackedValue;
 		}
 
 		public static bool operator !=(Bgra4444 lhs, Bgra4444 rhs)
 		{
-			return lhs.packedValue != rhs.packedValue;
+			return lhs.PackedValue != rhs.PackedValue;
 		}
 
 		#endregion

@@ -16,17 +16,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedShort4 : IPackedVector<ulong>, IEquatable<NormalizedShort4>
 	{
 		#region Public Properties
-		public ulong PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public ulong PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private ulong packedValue;
 
 		#endregion
 
@@ -34,12 +29,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public NormalizedShort4(Vector4 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		public NormalizedShort4(float x, float y, float z, float w)
 		{
-			packedValue = Pack(x, y, z, w);
+			PackedValue = Pack(x, y, z, w);
 		}
 
 		#endregion
@@ -51,10 +46,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float maxVal = 0x7FFF;
 
 			return new Vector4(
-				((short)(packedValue & 0xFFFF)) / maxVal,
-				((short)((packedValue >> 0x10) & 0xFFFF)) / maxVal,
-				((short)((packedValue >> 0x20) & 0xFFFF)) / maxVal,
-				((short)((packedValue >> 0x30) & 0xFFFF)) / maxVal
+				((short)(PackedValue & 0xFFFF)) / maxVal,
+				((short)((PackedValue >> 0x10) & 0xFFFF)) / maxVal,
+				((short)((PackedValue >> 0x20) & 0xFFFF)) / maxVal,
+				((short)((PackedValue >> 0x30) & 0xFFFF)) / maxVal
 			);
 		}
 
@@ -62,7 +57,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -78,13 +73,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.Equals(b);
 		}
 
-		public override bool Equals(object obj) => (obj is NormalizedShort4) && Equals((NormalizedShort4)obj);
+		public override bool Equals(object obj) => (obj is NormalizedShort4 short4) && Equals(short4);
 
-		public bool Equals(NormalizedShort4 other) => packedValue.Equals(other.packedValue);
+		public bool Equals(NormalizedShort4 other) => PackedValue.Equals(other.PackedValue);
 
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		#endregion
 
@@ -95,13 +90,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float max = 0x7FFF;
 			const float min = -max;
 
-			ulong word4 = (
+			ulong word4 =
 				(ulong)MathHelper.Clamp(
 					(float)Math.Round(x * max),
 					min,
 					max
 				) & 0xFFFF
-			);
+			;
 			ulong word3 = (
 				(ulong)MathHelper.Clamp(
 					(float)Math.Round(y * max),
@@ -124,7 +119,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 				) & 0xFFFF
 			) << 0x30;
 
-			return (word4 | word3 | word2 | word1);
+			return word4 | word3 | word2 | word1;
 		}
 
 		#endregion

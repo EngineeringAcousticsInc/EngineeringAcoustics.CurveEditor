@@ -1,9 +1,6 @@
-﻿using EngineeringAcoustics.Curve.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+
+using EngineeringAcoustics.Curve.Generators;
 
 namespace EngineeringAcoustics.Curve
 {

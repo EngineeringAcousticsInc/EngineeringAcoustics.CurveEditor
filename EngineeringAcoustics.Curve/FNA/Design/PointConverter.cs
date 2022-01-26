@@ -33,9 +33,9 @@ namespace Microsoft.Xna.Framework.Design
 			ITypeDescriptorContext context,
 			CultureInfo culture,
 			object value
-		) {
-			string s = value as string;
-			if (s != null)
+		)
+		{
+			if (value is string s)
 			{
 				string[] v = s.Split(
 					culture.TextInfo.ListSeparator.ToCharArray()
@@ -53,10 +53,11 @@ namespace Microsoft.Xna.Framework.Design
 			System.Globalization.CultureInfo culture,
 			object value,
 			Type destinationType
-		) {
+		)
+		{
 			if (destinationType == typeof(string))
 			{
-				Point pt = (Point) value;
+				var pt = (Point)value;
 				return string.Join(
 					culture.TextInfo.ListSeparator,
 					new string[]
@@ -72,10 +73,11 @@ namespace Microsoft.Xna.Framework.Design
 		public override object CreateInstance(
 			ITypeDescriptorContext context,
 			IDictionary propertyValues
-		) {
-			return (object) new Point(
-				(int) propertyValues["X"],
-				(int) propertyValues["Y"]
+		)
+		{
+			return new Point(
+				(int)propertyValues["X"],
+				(int)propertyValues["Y"]
 			);
 		}
 

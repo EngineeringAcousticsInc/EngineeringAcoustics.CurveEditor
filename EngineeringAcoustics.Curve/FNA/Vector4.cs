@@ -34,85 +34,43 @@ namespace Microsoft.Xna.Framework
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 0, 0, 0, 0.
 		/// </summary>
-		public static Vector4 Zero
-		{
-			get
-			{
-				return zero;
-			}
-		}
+		public static Vector4 Zero => _zero;
 
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 1, 1, 1, 1.
 		/// </summary>
-		public static Vector4 One
-		{
-			get
-			{
-				return unit;
-			}
-		}
+		public static Vector4 One { get; } = new Vector4(1f, 1f, 1f, 1f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 1, 0, 0, 0.
 		/// </summary>
-		public static Vector4 UnitX
-		{
-			get
-			{
-				return unitX;
-			}
-		}
+		public static Vector4 UnitX { get; } = new Vector4(1f, 0f, 0f, 0f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 0, 1, 0, 0.
 		/// </summary>
-		public static Vector4 UnitY
-		{
-			get
-			{
-				return unitY;
-			}
-		}
+		public static Vector4 UnitY { get; } = new Vector4(0f, 1f, 0f, 0f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 0, 0, 1, 0.
 		/// </summary>
-		public static Vector4 UnitZ
-		{
-			get
-			{
-				return unitZ;
-			}
-		}
+		public static Vector4 UnitZ { get; } = new Vector4(0f, 0f, 1f, 0f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector4"/> with components 0, 0, 0, 1.
 		/// </summary>
-		public static Vector4 UnitW
-		{
-			get
-			{
-				return unitW;
-			}
-		}
+		public static Vector4 UnitW { get; } = new Vector4(0f, 0f, 0f, 1f);
 
 		#endregion
 
 		#region Internal Properties
 
-		internal string DebugDisplayString
-		{
-			get
-			{
-				return string.Concat(
+		internal string DebugDisplayString => string.Concat(
 					X.ToString(), " ",
 					Y.ToString(), " ",
 					Z.ToString(), " ",
 					W.ToString()
 				);
-			}
-		}
 
 		#endregion
 
@@ -142,12 +100,7 @@ namespace Microsoft.Xna.Framework
 
 		#region Private Static Fields
 
-		private static Vector4 zero = new Vector4(); // Not readonly for performance -flibit
-		private static readonly Vector4 unit = new Vector4(1f, 1f, 1f, 1f);
-		private static readonly Vector4 unitX = new Vector4(1f, 0f, 0f, 0f);
-		private static readonly Vector4 unitY = new Vector4(0f, 1f, 0f, 0f);
-		private static readonly Vector4 unitZ = new Vector4(0f, 0f, 1f, 0f);
-		private static readonly Vector4 unitW = new Vector4(0f, 0f, 0f, 1f);
+		private static Vector4 _zero = new Vector4(); // Not readonly for performance -flibit
 
 		#endregion
 
@@ -162,10 +115,10 @@ namespace Microsoft.Xna.Framework
 		/// <param name="w">The w coordinate in 4d-space.</param>
 		public Vector4(float x, float y, float z, float w)
 		{
-			this.X = x;
-			this.Y = y;
-			this.Z = z;
-			this.W = w;
+			X = x;
+			Y = y;
+			Z = z;
+			W = w;
 		}
 
 		/// <summary>
@@ -176,10 +129,10 @@ namespace Microsoft.Xna.Framework
 		/// <param name="w">The w coordinate in 4d-space.</param>
 		public Vector4(Vector2 value, float z, float w)
 		{
-			this.X = value.X;
-			this.Y = value.Y;
-			this.Z = z;
-			this.W = w;
+			X = value.X;
+			Y = value.Y;
+			Z = z;
+			W = w;
 		}
 
 		/// <summary>
@@ -189,10 +142,10 @@ namespace Microsoft.Xna.Framework
 		/// <param name="w">The w coordinate in 4d-space.</param>
 		public Vector4(Vector3 value, float w)
 		{
-			this.X = value.X;
-			this.Y = value.Y;
-			this.Z = value.Z;
-			this.W = w;
+			X = value.X;
+			Y = value.Y;
+			Z = value.Z;
+			W = w;
 		}
 
 		/// <summary>
@@ -201,10 +154,10 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value">The x, y, z and w coordinates in 4d-space.</param>
 		public Vector4(float value)
 		{
-			this.X = value;
-			this.Y = value;
-			this.Z = value;
-			this.W = value;
+			X = value;
+			Y = value;
+			Z = value;
+			W = value;
 		}
 
 		#endregion
@@ -212,14 +165,11 @@ namespace Microsoft.Xna.Framework
 		#region Public Methods
 
 		/// <summary>
-		/// Compares whether current instance is equal to specified <see cref="Object"/>.
+		/// Compares whether current instance is equal to specified <see cref="object"/>.
 		/// </summary>
-		/// <param name="obj">The <see cref="Object"/> to compare.</param>
+		/// <param name="obj">The <see cref="object"/> to compare.</param>
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public override bool Equals(object obj)
-		{
-			return (obj is Vector4) && Equals((Vector4) obj);
-		}
+		public override bool Equals(object obj) => (obj is Vector4 vector) && Equals(vector);
 
 		/// <summary>
 		/// Compares whether current instance is equal to specified <see cref="Vector4"/>.
@@ -228,45 +178,36 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public bool Equals(Vector4 other)
 		{
-			return (	X == other.X &&
+			return X == other.X &&
 					Y == other.Y &&
 					Z == other.Z &&
-					W == other.W	);
+					W == other.W;
 		}
 
 		/// <summary>
 		/// Gets the hash code of this <see cref="Vector4"/>.
 		/// </summary>
 		/// <returns>Hash code of this <see cref="Vector4"/>.</returns>
-		public override int GetHashCode()
-		{
-			return W.GetHashCode() + X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode();
-		}
+		public override int GetHashCode() => W.GetHashCode() + X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode();
 
 		/// <summary>
 		/// Returns the length of this <see cref="Vector4"/>.
 		/// </summary>
 		/// <returns>The length of this <see cref="Vector4"/>.</returns>
-		public float Length()
-		{
-			return (float) Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
-		}
+		public float Length() => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
 		/// <summary>
 		/// Returns the squared length of this <see cref="Vector4"/>.
 		/// </summary>
 		/// <returns>The squared length of this <see cref="Vector4"/>.</returns>
-		public float LengthSquared()
-		{
-			return (X * X) + (Y * Y) + (Z * Z) + (W * W);
-		}
+		public float LengthSquared() => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
 		/// <summary>
 		/// Turns this <see cref="Vector4"/> to a unit vector with the same direction.
 		/// </summary>
 		public void Normalize()
 		{
-			float factor = 1.0f / (float) Math.Sqrt(
+			float factor = 1.0f / (float)Math.Sqrt(
 				(X * X) +
 				(Y * Y) +
 				(Z * Z) +
@@ -280,12 +221,12 @@ namespace Microsoft.Xna.Framework
 
 		public override string ToString()
 		{
-			return (
+			return
 				"{X:" + X.ToString() +
 				" Y:" + Y.ToString() +
 				" Z:" + Z.ToString() +
 				" W:" + W.ToString() + "}"
-			);
+			;
 		}
 
 		#endregion
@@ -338,7 +279,8 @@ namespace Microsoft.Xna.Framework
 			Vector4 value3,
 			float amount1,
 			float amount2
-		) {
+		)
+		{
 			return new Vector4(
 				MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
 				MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2),
@@ -363,7 +305,8 @@ namespace Microsoft.Xna.Framework
 			float amount1,
 			float amount2,
 			out Vector4 result
-		) {
+		)
+		{
 			result.X = MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2);
 			result.Y = MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2);
 			result.Z = MathHelper.Barycentric(value1.Z, value2.Z, value3.Z, amount1, amount2);
@@ -385,7 +328,8 @@ namespace Microsoft.Xna.Framework
 			Vector4 value3,
 			Vector4 value4,
 			float amount
-		) {
+		)
+		{
 			return new Vector4(
 				MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
 				MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount),
@@ -410,7 +354,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value4,
 			float amount,
 			out Vector4 result
-		) {
+		)
+		{
 			result.X = MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount);
 			result.Y = MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount);
 			result.Z = MathHelper.CatmullRom(value1.Z, value2.Z, value3.Z, value4.Z, amount);
@@ -446,7 +391,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 min,
 			ref Vector4 max,
 			out Vector4 result
-		) {
+		)
+		{
 			result.X = MathHelper.Clamp(value1.X, min.X, max.X);
 			result.Y = MathHelper.Clamp(value1.Y, min.Y, max.Y);
 			result.Z = MathHelper.Clamp(value1.Z, min.Z, max.Z);
@@ -459,10 +405,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">The first vector.</param>
 		/// <param name="value2">The second vector.</param>
 		/// <returns>The distance between two vectors.</returns>
-		public static float Distance(Vector4 value1, Vector4 value2)
-		{
-			return (float) Math.Sqrt(DistanceSquared(value1, value2));
-		}
+		public static float Distance(Vector4 value1, Vector4 value2) => (float)Math.Sqrt(DistanceSquared(value1, value2));
 
 		/// <summary>
 		/// Returns the distance between two vectors.
@@ -470,10 +413,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">The first vector.</param>
 		/// <param name="value2">The second vector.</param>
 		/// <param name="result">The distance between two vectors as an output parameter.</param>
-		public static void Distance(ref Vector4 value1, ref Vector4 value2, out float result)
-		{
-			result = (float) Math.Sqrt(DistanceSquared(value1, value2));
-		}
+		public static void Distance(ref Vector4 value1, ref Vector4 value2, out float result) => result = (float)Math.Sqrt(DistanceSquared(value1, value2));
 
 		/// <summary>
 		/// Returns the squared distance between two vectors.
@@ -483,12 +423,12 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The squared distance between two vectors.</returns>
 		public static float DistanceSquared(Vector4 value1, Vector4 value2)
 		{
-			return (
-				(value1.W - value2.W) * (value1.W - value2.W) +
-				(value1.X - value2.X) * (value1.X - value2.X) +
-				(value1.Y - value2.Y) * (value1.Y - value2.Y) +
-				(value1.Z - value2.Z) * (value1.Z - value2.Z)
-			);
+			return
+				((value1.W - value2.W) * (value1.W - value2.W)) +
+				((value1.X - value2.X) * (value1.X - value2.X)) +
+				((value1.Y - value2.Y) * (value1.Y - value2.Y)) +
+				((value1.Z - value2.Z) * (value1.Z - value2.Z))
+			;
 		}
 
 		/// <summary>
@@ -501,13 +441,14 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value1,
 			ref Vector4 value2,
 			out float result
-		) {
-			result = (
-				(value1.W - value2.W) * (value1.W - value2.W) +
-				(value1.X - value2.X) * (value1.X - value2.X) +
-				(value1.Y - value2.Y) * (value1.Y - value2.Y) +
-				(value1.Z - value2.Z) * (value1.Z - value2.Z)
-			);
+		)
+		{
+			result =
+				((value1.W - value2.W) * (value1.W - value2.W)) +
+				((value1.X - value2.X) * (value1.X - value2.X)) +
+				((value1.Y - value2.Y) * (value1.Y - value2.Y)) +
+				((value1.Z - value2.Z) * (value1.Z - value2.Z))
+			;
 		}
 
 		/// <summary>
@@ -566,7 +507,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value1,
 			ref Vector4 value2,
 			out Vector4 result
-		) {
+		)
+		{
 			result.W = value1.W / value2.W;
 			result.X = value1.X / value2.X;
 			result.Y = value1.Y / value2.Y;
@@ -581,12 +523,12 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The dot product of two vectors.</returns>
 		public static float Dot(Vector4 vector1, Vector4 vector2)
 		{
-			return (
-				vector1.X * vector2.X +
-				vector1.Y * vector2.Y +
-				vector1.Z * vector2.Z +
-				vector1.W * vector2.W
-			);
+			return
+				(vector1.X * vector2.X) +
+				(vector1.Y * vector2.Y) +
+				(vector1.Z * vector2.Z) +
+				(vector1.W * vector2.W)
+			;
 		}
 
 		/// <summary>
@@ -597,12 +539,12 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">The dot product of two vectors as an output parameter.</param>
 		public static void Dot(ref Vector4 vector1, ref Vector4 vector2, out float result)
 		{
-			result = (
+			result =
 				(vector1.X * vector2.X) +
 				(vector1.Y * vector2.Y) +
 				(vector1.Z * vector2.Z) +
 				(vector1.W * vector2.W)
-			);
+			;
 		}
 
 		/// <summary>
@@ -620,7 +562,8 @@ namespace Microsoft.Xna.Framework
 			Vector4 value2,
 			Vector4 tangent2,
 			float amount
-		) {
+		)
+		{
 			return new Vector4(
 				MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
 				MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount),
@@ -645,7 +588,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 tangent2,
 			float amount,
 			out Vector4 result
-		) {
+		)
+		{
 			result.W = MathHelper.Hermite(value1.W, tangent1.W, value2.W, tangent2.W, amount);
 			result.X = MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount);
 			result.Y = MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount);
@@ -681,7 +625,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value2,
 			float amount,
 			out Vector4 result
-		) {
+		)
+		{
 			result.X = MathHelper.Lerp(value1.X, value2.X, amount);
 			result.Y = MathHelper.Lerp(value1.Y, value2.Y, amount);
 			result.Z = MathHelper.Lerp(value1.Z, value2.Z, amount);
@@ -837,7 +782,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Unit vector.</returns>
 		public static Vector4 Normalize(Vector4 vector)
 		{
-			float factor = 1.0f / (float) Math.Sqrt(
+			float factor = 1.0f / (float)Math.Sqrt(
 				(vector.X * vector.X) +
 				(vector.Y * vector.Y) +
 				(vector.Z * vector.Z) +
@@ -858,7 +803,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Unit vector as an output parameter.</param>
 		public static void Normalize(ref Vector4 vector, out Vector4 result)
 		{
-			float factor = 1.0f / (float) Math.Sqrt(
+			float factor = 1.0f / (float)Math.Sqrt(
 				(vector.X * vector.X) +
 				(vector.Y * vector.Y) +
 				(vector.Z * vector.Z) +
@@ -899,7 +844,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value2,
 			float amount,
 			out Vector4 result
-		) {
+		)
+		{
 			result.X = MathHelper.SmoothStep(value1.X, value2.X, amount);
 			result.Y = MathHelper.SmoothStep(value1.Y, value2.Y, amount);
 			result.Z = MathHelper.SmoothStep(value1.Z, value2.Z, amount);
@@ -943,8 +889,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="Vector4"/>.</returns>
 		public static Vector4 Transform(Vector2 position, Matrix matrix)
 		{
-			Vector4 result;
-			Transform(ref position, ref matrix, out result);
+			Transform(ref position, ref matrix, out Vector4 result);
 			return result;
 		}
 
@@ -956,8 +901,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="Vector4"/>.</returns>
 		public static Vector4 Transform(Vector3 position, Matrix matrix)
 		{
-			Vector4 result;
-			Transform(ref position, ref matrix, out result);
+			Transform(ref position, ref matrix, out Vector4 result);
 			return result;
 		}
 
@@ -997,30 +941,30 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Transformed <see cref="Vector4"/> as an output parameter.</param>
 		public static void Transform(ref Vector3 position, ref Matrix matrix, out Vector4 result)
 		{
-			float x = (
+			float x =
 				(position.X * matrix.M11) +
 				(position.Y * matrix.M21) +
 				(position.Z * matrix.M31) +
 				matrix.M41
-			);
-			float y = (
+			;
+			float y =
 				(position.X * matrix.M12) +
 				(position.Y * matrix.M22) +
 				(position.Z * matrix.M32) +
 				matrix.M42
-			);
-			float z = (
+			;
+			float z =
 				(position.X * matrix.M13) +
 				(position.Y * matrix.M23) +
 				(position.Z * matrix.M33) +
 				matrix.M43
-			);
-			float w = (
+			;
+			float w =
 				(position.X * matrix.M14) +
 				(position.Y * matrix.M24) +
 				(position.Z * matrix.M34) +
 				matrix.M44
-			);
+			;
 			result.X = x;
 			result.Y = y;
 			result.Z = z;
@@ -1035,30 +979,30 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Transformed <see cref="Vector4"/> as an output parameter.</param>
 		public static void Transform(ref Vector4 vector, ref Matrix matrix, out Vector4 result)
 		{
-			float x = (
+			float x =
 				(vector.X * matrix.M11) +
 				(vector.Y * matrix.M21) +
 				(vector.Z * matrix.M31) +
 				(vector.W * matrix.M41)
-			);
-			float y = (
+			;
+			float y =
 				(vector.X * matrix.M12) +
 				(vector.Y * matrix.M22) +
 				(vector.Z * matrix.M32) +
 				(vector.W * matrix.M42)
-			);
-			float z = (
+			;
+			float z =
 				(vector.X * matrix.M13) +
 				(vector.Y * matrix.M23) +
 				(vector.Z * matrix.M33) +
 				(vector.W * matrix.M43)
-			);
-			float w = (
+			;
+			float w =
 				(vector.X * matrix.M14) +
 				(vector.Y * matrix.M24) +
 				(vector.Z * matrix.M34) +
 				(vector.W * matrix.M44)
-			);
+			;
 			result.X = x;
 			result.Y = y;
 			result.Z = z;
@@ -1075,7 +1019,8 @@ namespace Microsoft.Xna.Framework
 			Vector4[] sourceArray,
 			ref Matrix matrix,
 			Vector4[] destinationArray
-		) {
+		)
+		{
 			if (sourceArray == null)
 			{
 				throw new ArgumentNullException("sourceArray");
@@ -1116,7 +1061,8 @@ namespace Microsoft.Xna.Framework
 			Vector4[] destinationArray,
 			int destinationIndex,
 			int length
-		) {
+		)
+		{
 			if (sourceArray == null)
 			{
 				throw new ArgumentNullException("sourceArray");
@@ -1155,8 +1101,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="Vector4"/>.</returns>
 		public static Vector4 Transform(Vector2 value, Quaternion rotation)
 		{
-			Vector4 result;
-			Transform(ref value, ref rotation, out result);
+			Transform(ref value, ref rotation, out Vector4 result);
 			return result;
 		}
 
@@ -1168,8 +1113,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="Vector4"/>.</returns>
 		public static Vector4 Transform(Vector3 value, Quaternion rotation)
 		{
-			Vector4 result;
-			Transform(ref value, ref rotation, out result);
+			Transform(ref value, ref rotation, out Vector4 result);
 			return result;
 		}
 
@@ -1181,8 +1125,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Transformed <see cref="Vector4"/>.</returns>
 		public static Vector4 Transform(Vector4 value, Quaternion rotation)
 		{
-			Vector4 result;
-			Transform(ref value, ref rotation, out result);
+			Transform(ref value, ref rotation, out Vector4 result);
 			return result;
 		}
 
@@ -1196,7 +1139,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value,
 			ref Quaternion rotation,
 			out Vector4 result
-		) {
+		)
+		{
 			double xx = rotation.X + rotation.X;
 			double yy = rotation.Y + rotation.Y;
 			double zz = rotation.Z + rotation.Z;
@@ -1209,17 +1153,17 @@ namespace Microsoft.Xna.Framework
 			double yyy = rotation.Y * yy;
 			double yzz = rotation.Y * zz;
 			double zzz = rotation.Z * zz;
-			result.X = (float) (
-				(double) value.X * (1.0 - yyy - zzz) +
-				(double) value.Y * (xyy - wzz)
+			result.X = (float)(
+				 (value.X * (1.0 - yyy - zzz)) +
+				 (value.Y * (xyy - wzz))
 			);
-			result.Y = (float) (
-				(double) value.X * (xyy + wzz) +
-				(double) value.Y * (1.0 - xxx - zzz)
+			result.Y = (float)(
+				 (value.X * (xyy + wzz)) +
+				 (value.Y * (1.0 - xxx - zzz))
 			);
-			result.Z = (float) (
-				(double) value.X * (xzz - wyy) +
-				(double) value.Y * (yzz + wxx)
+			result.Z = (float)(
+				 (value.X * (xzz - wyy)) +
+				 (value.Y * (yzz + wxx))
 			);
 			result.W = 1.0f;
 		}
@@ -1234,7 +1178,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector3 value,
 			ref Quaternion rotation,
 			out Vector4 result
-		) {
+		)
+		{
 			double xx = rotation.X + rotation.X;
 			double yy = rotation.Y + rotation.Y;
 			double zz = rotation.Z + rotation.Z;
@@ -1247,20 +1192,20 @@ namespace Microsoft.Xna.Framework
 			double yyy = rotation.Y * yy;
 			double yzz = rotation.Y * zz;
 			double zzz = rotation.Z * zz;
-			result.X = (float) (
-				(double) value.X * (1.0 - yyy - zzz) +
-				(double) value.Y * (xyy - wzz) +
-				(double) value.Z * (xzz + wyy)
+			result.X = (float)(
+				 (value.X * (1.0 - yyy - zzz)) +
+				 (value.Y * (xyy - wzz)) +
+				 (value.Z * (xzz + wyy))
 			);
-			result.Y = (float) (
-				(double) value.X * (xyy + wzz) +
-				(double) value.Y * (1.0 - xxx - zzz) +
-				(double) value.Z * (yzz - wxx)
+			result.Y = (float)(
+				 (value.X * (xyy + wzz)) +
+				 (value.Y * (1.0 - xxx - zzz)) +
+				 (value.Z * (yzz - wxx))
 			);
-			result.Z = (float) (
-				(double) value.X * (xzz - wyy) +
-				(double) value.Y * (yzz + wxx) +
-				(double) value.Z * (1.0 - xxx - yyy)
+			result.Z = (float)(
+				 (value.X * (xzz - wyy)) +
+				 (value.Y * (yzz + wxx)) +
+				 (value.Z * (1.0 - xxx - yyy))
 			);
 			result.W = 1.0f;
 		}
@@ -1275,7 +1220,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector4 value,
 			ref Quaternion rotation,
 			out Vector4 result
-		) {
+		)
+		{
 			double xx = rotation.X + rotation.X;
 			double yy = rotation.Y + rotation.Y;
 			double zz = rotation.Z + rotation.Z;
@@ -1288,20 +1234,20 @@ namespace Microsoft.Xna.Framework
 			double yyy = rotation.Y * yy;
 			double yzz = rotation.Y * zz;
 			double zzz = rotation.Z * zz;
-			result.X = (float) (
-				(double) value.X * (1.0 - yyy - zzz) +
-				(double) value.Y * (xyy - wzz) +
-				(double) value.Z * (xzz + wyy)
+			result.X = (float)(
+				 (value.X * (1.0 - yyy - zzz)) +
+				 (value.Y * (xyy - wzz)) +
+				 (value.Z * (xzz + wyy))
 			);
-			result.Y = (float) (
-				(double) value.X * (xyy + wzz) +
-				(double) value.Y * (1.0 - xxx - zzz) +
-				(double) value.Z * (yzz - wxx)
+			result.Y = (float)(
+				 (value.X * (xyy + wzz)) +
+				 (value.Y * (1.0 - xxx - zzz)) +
+				 (value.Z * (yzz - wxx))
 			);
-			result.Z = (float) (
-				(double) value.X * (xzz - wyy) +
-				(double) value.Y * (yzz + wxx) +
-				(double) value.Z * (1.0 - xxx - yyy)
+			result.Z = (float)(
+				 (value.X * (xzz - wyy)) +
+				 (value.Y * (yzz + wxx)) +
+				 (value.Z * (1.0 - xxx - yyy))
 			);
 			result.W = value.W;
 		}
@@ -1316,7 +1262,8 @@ namespace Microsoft.Xna.Framework
 			Vector4[] sourceArray,
 			ref Quaternion rotation,
 			Vector4[] destinationArray
-		) {
+		)
+		{
 			if (sourceArray == null)
 			{
 				throw new ArgumentException("sourceArray");
@@ -1357,7 +1304,8 @@ namespace Microsoft.Xna.Framework
 			Vector4[] destinationArray,
 			int destinationIndex,
 			int length
-		) {
+		)
+		{
 			if (sourceArray == null)
 			{
 				throw new ArgumentException("sourceArray");
@@ -1399,10 +1347,10 @@ namespace Microsoft.Xna.Framework
 
 		public static bool operator ==(Vector4 value1, Vector4 value2)
 		{
-			return (	value1.X == value2.X &&
+			return value1.X == value2.X &&
 					value1.Y == value2.Y &&
 					value1.Z == value2.Z &&
-					value1.W == value2.W	);
+					value1.W == value2.W;
 		}
 
 		public static bool operator !=(Vector4 value1, Vector4 value2)

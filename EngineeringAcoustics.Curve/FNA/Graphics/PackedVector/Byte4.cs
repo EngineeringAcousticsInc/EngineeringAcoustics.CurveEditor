@@ -24,17 +24,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Directly gets or sets the packed representation of the value.
 		/// </summary>
 		/// <value>The packed representation of the value.</value>
-		public uint PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public uint PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private uint packedValue;
 
 		#endregion
 
@@ -48,7 +43,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </param>
 		public Byte4(Vector4 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		/// <summary>
@@ -60,7 +55,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <param name="w">Initial value for the w component.</param>
 		public Byte4(float x, float y, float z, float w)
 		{
-			packedValue = Pack(x, y, z, w);
+			PackedValue = Pack(x, y, z, w);
 		}
 
 		#endregion
@@ -72,10 +67,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <returns>The expanded vector.</returns>
 		public Vector4 ToVector4() => new Vector4(
-				(packedValue & 0xFF),
-				((packedValue >> 8) & 0xFF),
-				((packedValue >> 16) & 0xFF),
-				(packedValue >> 24)
+				PackedValue & 0xFF,
+				(PackedValue >> 8) & 0xFF,
+				(PackedValue >> 16) & 0xFF,
+				PackedValue >> 24
 			);
 
 		#endregion
@@ -86,7 +81,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed representation from a Vector4.
 		/// </summary>
 		/// <param name="vector">The vector to create the packed representation from.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -101,7 +96,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>True if the objects are different; false otherwise.</returns>
 		public static bool operator !=(Byte4 a, Byte4 b)
 		{
-			return a.packedValue != b.packedValue;
+			return a.PackedValue != b.PackedValue;
 		}
 
 		/// <summary>
@@ -113,7 +108,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>True if the objects are the same; false otherwise.</returns>
 		public static bool operator ==(Byte4 a, Byte4 b)
 		{
-			return a.packedValue == b.packedValue;
+			return a.PackedValue == b.PackedValue;
 		}
 
 		/// <summary>
@@ -124,7 +119,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public override bool Equals(object obj) => (obj is Byte4) && Equals((Byte4)obj);
+		public override bool Equals(object obj) => (obj is Byte4 byte4) && Equals(byte4);
 
 		/// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a
@@ -140,13 +135,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Gets the hash code for the current instance.
 		/// </summary>
 		/// <returns>Hash code for the instance.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		/// <summary>
 		/// Returns a string representation of the current instance.
 		/// </summary>
 		/// <returns>String that represents the object.</returns>
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		#endregion
 

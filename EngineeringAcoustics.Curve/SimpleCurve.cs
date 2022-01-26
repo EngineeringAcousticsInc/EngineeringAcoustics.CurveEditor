@@ -1,4 +1,4 @@
-﻿
+
 using XnaCurve = Microsoft.Xna.Framework.Curve;
 
 namespace EngineeringAcoustics.Curve
@@ -9,6 +9,7 @@ namespace EngineeringAcoustics.Curve
 
 		public ICurve BaseCurve => null;
 
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unused as of yet.")]
 		private ICurve /*ICurve. #clone */CloneNyi()
 		{
 			var clone = new SimpleCurve();

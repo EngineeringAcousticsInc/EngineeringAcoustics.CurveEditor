@@ -35,20 +35,20 @@ namespace Microsoft.Xna.Framework.Design
 			CultureInfo culture,
 			object value,
 			Type destinationType
-		) {
+		) =>
 			// FIXME: This method exists in the spec, but... why?! -flibit
-			return base.ConvertTo(context, culture, value, destinationType);
-		}
+			base.ConvertTo(context, culture, value, destinationType);
 
 		public override object CreateInstance(
 			ITypeDescriptorContext context,
 			IDictionary propertyValues
-		) {
-			return (object) new Rectangle(
-				(int) propertyValues["X"],
-				(int) propertyValues["Y"],
-				(int) propertyValues["Width"],
-				(int) propertyValues["Height"]
+		)
+		{
+			return new Rectangle(
+				(int)propertyValues["X"],
+				(int)propertyValues["Y"],
+				(int)propertyValues["Width"],
+				(int)propertyValues["Height"]
 			);
 		}
 

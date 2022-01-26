@@ -16,17 +16,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct NormalizedShort2 : IPackedVector<uint>, IEquatable<NormalizedShort2>
 	{
 		#region Public Properties
-		public uint PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public uint PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private uint packedValue;
 
 		#endregion
 
@@ -34,12 +29,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public NormalizedShort2(Vector2 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y);
+			PackedValue = Pack(vector.X, vector.Y);
 		}
 
 		public NormalizedShort2(float x, float y)
 		{
-			packedValue = Pack(x, y);
+			PackedValue = Pack(x, y);
 		}
 
 		#endregion
@@ -51,8 +46,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float maxVal = 0x7FFF;
 
 			return new Vector2(
-				(short)(packedValue & 0xFFFF) / maxVal,
-				(short)(packedValue >> 0x10) / maxVal
+				(short)(PackedValue & 0xFFFF) / maxVal,
+				(short)(PackedValue >> 0x10) / maxVal
 			);
 		}
 
@@ -60,7 +55,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y);
 
 		Vector4 IPackedVector.ToVector4() => new Vector4(ToVector2(), 0.0f, 1.0f);
 
@@ -78,13 +73,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			return a.Equals(b);
 		}
 
-		public override bool Equals(object obj) => (obj is NormalizedShort2) && Equals((NormalizedShort2)obj);
+		public override bool Equals(object obj) => (obj is NormalizedShort2 short2) && Equals(short2);
 
-		public bool Equals(NormalizedShort2 other) => packedValue.Equals(other.packedValue);
+		public bool Equals(NormalizedShort2 other) => PackedValue.Equals(other.PackedValue);
 
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		#endregion
 
@@ -110,7 +105,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 				) & 0xFFFF
 			) << 0x10);
 
-			return (word2 | word1);
+			return word2 | word1;
 		}
 
 		#endregion

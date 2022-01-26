@@ -24,17 +24,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <summary>
 		/// Gets and sets the packed value.
 		/// </summary>
-		public uint PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public uint PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private uint packedValue;
 
 		#endregion
 
@@ -47,7 +42,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <param name="y">The y component</param>
 		public Rg32(float x, float y)
 		{
-			packedValue = Pack(x, y);
+			PackedValue = Pack(x, y);
 		}
 
 		/// <summary>
@@ -58,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </param>
 		public Rg32(Vector2 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y);
+			PackedValue = Pack(vector.X, vector.Y);
 		}
 
 		#endregion
@@ -70,8 +65,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <returns>The packed vector in Vector2 format</returns>
 		public Vector2 ToVector2() => new Vector2(
-				(packedValue & 0xFFFF) / 65535.0f,
-				(packedValue >> 16) / 65535.0f
+				(PackedValue & 0xFFFF) / 65535.0f,
+				(PackedValue >> 16) / 65535.0f
 			);
 
 		#endregion
@@ -82,7 +77,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed vector from a Vector4.
 		/// </summary>
 		/// <param name="vector">Vector containing the components.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y);
 
 		/// <summary>
 		/// Gets the packed vector in Vector4 format.
@@ -99,35 +94,35 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <param name="obj">The object to compare.</param>
 		/// <returns>True if the object is equal to the packed vector.</returns>
-		public override bool Equals(object obj) => (obj is Rg32) && Equals((Rg32)obj);
+		public override bool Equals(object obj) => (obj is Rg32 rg) && Equals(rg);
 
 		/// <summary>
 		/// Compares another Rg32 packed vector with the packed vector.
 		/// </summary>
 		/// <param name="other">The Rg32 packed vector to compare.</param>
 		/// <returns>True if the packed vectors are equal.</returns>
-		public bool Equals(Rg32 other) => packedValue == other.packedValue;
+		public bool Equals(Rg32 other) => PackedValue == other.PackedValue;
 
 		/// <summary>
 		/// Gets a string representation of the packed vector.
 		/// </summary>
 		/// <returns>A string representation of the packed vector.</returns>
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		/// <summary>
 		/// Gets a hash code of the packed vector.
 		/// </summary>
 		/// <returns>The hash code for the packed vector.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		public static bool operator ==(Rg32 lhs, Rg32 rhs)
 		{
-			return lhs.packedValue == rhs.packedValue;
+			return lhs.PackedValue == rhs.PackedValue;
 		}
 
 		public static bool operator !=(Rg32 lhs, Rg32 rhs)
 		{
-			return lhs.packedValue != rhs.packedValue;
+			return lhs.PackedValue != rhs.PackedValue;
 		}
 
 		#endregion

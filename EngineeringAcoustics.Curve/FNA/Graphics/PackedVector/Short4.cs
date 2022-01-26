@@ -24,17 +24,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Directly gets or sets the packed representation of the value.
 		/// </summary>
 		/// <value>The packed representation of the value.</value>
-		public ulong PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public ulong PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private ulong packedValue;
 
 		#endregion
 
@@ -48,7 +43,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </param>
 		public Short4(Vector4 vector)
 		{
-			packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+			PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 		}
 
 		/// <summary>
@@ -60,7 +55,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <param name="w">Initial value for the w component.</param>
 		public Short4(float x, float y, float z, float w)
 		{
-			packedValue = Pack(x, y, z, w);
+			PackedValue = Pack(x, y, z, w);
 		}
 
 		#endregion
@@ -72,10 +67,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// </summary>
 		/// <returns>The expanded vector.</returns>
 		public Vector4 ToVector4() => new Vector4(
-				(short)(packedValue & 0xFFFF),
-				(short)((packedValue >> 16) & 0xFFFF),
-				(short)((packedValue >> 32) & 0xFFFF),
-				(short)(packedValue >> 48)
+				(short)(PackedValue & 0xFFFF),
+				(short)((PackedValue >> 16) & 0xFFFF),
+				(short)((PackedValue >> 32) & 0xFFFF),
+				(short)(PackedValue >> 48)
 			);
 
 		#endregion
@@ -86,7 +81,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Sets the packed representation from a Vector4.
 		/// </summary>
 		/// <param name="vector">The vector to create the packed representation from.</param>
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = Pack(vector.X, vector.Y, vector.Z, vector.W);
 
 		#endregion
 
@@ -124,7 +119,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// <returns>
 		/// True if the current instance is equal to the specified object; false otherwise.
 		/// </returns>
-		public override bool Equals(object obj) => (obj is Short4) && Equals((Short4)obj);
+		public override bool Equals(object obj) => (obj is Short4 short4) && Equals(short4);
 
 		/// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a
@@ -140,13 +135,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		/// Gets the hash code for the current instance.
 		/// </summary>
 		/// <returns>Hash code for the instance.</returns>
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		/// <summary>
 		/// Returns a string representation of the current instance.
 		/// </summary>
 		/// <returns>String that represents the object.</returns>
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
 		#endregion
 

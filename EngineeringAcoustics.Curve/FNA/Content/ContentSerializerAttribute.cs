@@ -32,17 +32,14 @@ namespace Microsoft.Xna.Framework.Content
 			get
 			{
 				// Return the default if unset.
-				if (string.IsNullOrEmpty(collectionItemName))
+				if (string.IsNullOrEmpty(_collectionItemName))
 				{
 					return "Item";
 				}
 
-				return collectionItemName;
+				return _collectionItemName;
 			}
-			set
-			{
-				collectionItemName = value;
-			}
+			set => _collectionItemName = value;
 		}
 
 		public string ElementName
@@ -60,13 +57,7 @@ namespace Microsoft.Xna.Framework.Content
 		/// <summary>
 		/// Returns true if the default CollectionItemName value was overridden.
 		/// </summary>
-		public bool HasCollectionItemName
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(collectionItemName);
-			}
-		}
+		public bool HasCollectionItemName => !string.IsNullOrEmpty(_collectionItemName);
 
 		public bool Optional
 		{
@@ -84,7 +75,7 @@ namespace Microsoft.Xna.Framework.Content
 
 		#region Private Variables
 
-		private string collectionItemName;
+		private string _collectionItemName;
 
 		#endregion
 
@@ -104,13 +95,15 @@ namespace Microsoft.Xna.Framework.Content
 
 		public ContentSerializerAttribute Clone()
 		{
-			ContentSerializerAttribute clone = new ContentSerializerAttribute();
-			clone.AllowNull = AllowNull;
-			clone.collectionItemName = collectionItemName;
-			clone.ElementName = ElementName;
-			clone.FlattenContent = FlattenContent;
-			clone.Optional = Optional;
-			clone.SharedResource = SharedResource;
+			var clone = new ContentSerializerAttribute
+			{
+				AllowNull = AllowNull,
+				_collectionItemName = _collectionItemName,
+				ElementName = ElementName,
+				FlattenContent = FlattenContent,
+				Optional = Optional,
+				SharedResource = SharedResource
+			};
 			return clone;
 		}
 

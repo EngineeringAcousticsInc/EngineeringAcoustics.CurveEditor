@@ -16,7 +16,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		Vector4 ToVector4();
 	}
-	
+
 	// PackedVector Generic interface
 	// http://msdn.microsoft.com/en-us/library/bb197661.aspx
 	public interface IPackedVector<TPacked> : IPackedVector

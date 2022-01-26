@@ -88,7 +88,8 @@ namespace Microsoft.Xna.Framework
 			0,
 			0,
 			CurveContinuity.Smooth
-		) {
+		)
+		{
 		}
 
 		/// <summary>
@@ -109,7 +110,8 @@ namespace Microsoft.Xna.Framework
 			tangentIn,
 			tangentOut,
 			CurveContinuity.Smooth
-		) {
+		)
+		{
 		}
 
 		/// <summary>
@@ -126,7 +128,8 @@ namespace Microsoft.Xna.Framework
 			float tangentIn,
 			float tangentOut,
 			CurveContinuity continuity
-		) {
+		)
+		{
 			Position = position;
 			Value = value;
 			TangentIn = tangentIn;
@@ -153,15 +156,9 @@ namespace Microsoft.Xna.Framework
 			);
 		}
 
-		public int CompareTo(CurveKey other)
-		{
-			return Position.CompareTo(other.Position);
-		}
+		public int CompareTo(CurveKey other) => Position.CompareTo(other.Position);
 
-		public bool Equals(CurveKey other)
-		{
-			return (this == other);
-		}
+		public bool Equals(CurveKey other) => this == other;
 
 		#endregion
 
@@ -196,27 +193,24 @@ namespace Microsoft.Xna.Framework
 				return object.Equals(a, null);
 			}
 
-			return (	(a.Position == b.Position) &&
+			return (a.Position == b.Position) &&
 					(a.Value == b.Value) &&
 					(a.TangentIn == b.TangentIn) &&
 					(a.TangentOut == b.TangentOut) &&
-					(a.Continuity == b.Continuity)	);
+					(a.Continuity == b.Continuity);
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj as CurveKey) == this;
-		}
+		public override bool Equals(object obj) => (obj as CurveKey) == this;
 
 		public override int GetHashCode()
 		{
-			return (
+			return 
 				Position.GetHashCode() ^
 				Value.GetHashCode() ^
 				TangentIn.GetHashCode() ^
 				TangentOut.GetHashCode() ^
 				Continuity.GetHashCode()
-			);
+			;
 		}
 
 		#endregion

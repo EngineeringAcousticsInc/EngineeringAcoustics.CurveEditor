@@ -33,9 +33,9 @@ namespace Microsoft.Xna.Framework.Design
 			ITypeDescriptorContext context,
 			CultureInfo culture,
 			object value
-		) {
-			string s = value as string;
-			if (s != null)
+		)
+		{
+			if (value is string s)
 			{
 				string[] v = s.Split(
 					culture.TextInfo.ListSeparator.ToCharArray()
@@ -55,10 +55,11 @@ namespace Microsoft.Xna.Framework.Design
 			CultureInfo culture,
 			object value,
 			Type destinationType
-		) {
+		)
+		{
 			if (destinationType == typeof(string))
 			{
-				Quaternion quat = (Quaternion) value;
+				var quat = (Quaternion)value;
 				return string.Join(
 					culture.TextInfo.ListSeparator,
 					new string[]
@@ -76,12 +77,13 @@ namespace Microsoft.Xna.Framework.Design
 		public override object CreateInstance(
 			ITypeDescriptorContext context,
 			IDictionary propertyValues
-		) {
-			return (object) new Quaternion(
-				(float) propertyValues["X"],
-				(float) propertyValues["Y"],
-				(float) propertyValues["Z"],
-				(float) propertyValues["W"]
+		)
+		{
+			return new Quaternion(
+				(float)propertyValues["X"],
+				(float)propertyValues["Y"],
+				(float)propertyValues["Z"],
+				(float)propertyValues["W"]
 			);
 		}
 

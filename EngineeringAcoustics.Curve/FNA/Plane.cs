@@ -28,16 +28,10 @@ namespace Microsoft.Xna.Framework
 	{
 		#region Internal Properties
 
-		internal string DebugDisplayString
-		{
-			get
-			{
-				return string.Concat(
+		internal string DebugDisplayString => string.Concat(
 					Normal.DebugDisplayString, " ",
 					D.ToString()
 				);
-			}
-		}
 
 		#endregion
 
@@ -66,9 +60,9 @@ namespace Microsoft.Xna.Framework
 			Vector3 ab = b - a;
 			Vector3 ac = c - a;
 
-			Vector3 cross = Vector3.Cross(ab, ac);
+			var cross = Vector3.Cross(ab, ac);
 			Vector3.Normalize(ref cross, out Normal);
-			D = -(Vector3.Dot(Normal, a));
+			D = -Vector3.Dot(Normal, a);
 		}
 
 		public Plane(float a, float b, float c, float d)
@@ -83,60 +77,60 @@ namespace Microsoft.Xna.Framework
 
 		public float Dot(Vector4 value)
 		{
-			return (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z) +
-				(this.D * value.W)
-			);
+			return
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z) +
+				(D * value.W)
+			;
 		}
 
 		public void Dot(ref Vector4 value, out float result)
 		{
-			result = (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z) +
-				(this.D * value.W)
-			);
+			result =
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z) +
+				(D * value.W)
+			;
 		}
 
 		public float DotCoordinate(Vector3 value)
 		{
-			return (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z) +
-				this.D
-			);
+			return
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z) +
+				D
+			;
 		}
 
 		public void DotCoordinate(ref Vector3 value, out float result)
 		{
-			result = (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z) +
-				this.D
-			);
+			result =
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z) +
+				D
+			;
 		}
 
 		public float DotNormal(Vector3 value)
 		{
-			return (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z)
-			);
+			return
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z)
+			;
 		}
 
 		public void DotNormal(ref Vector3 value, out float result)
 		{
-			result = (
-				(this.Normal.X * value.X) +
-				(this.Normal.Y * value.Y) +
-				(this.Normal.Z * value.Z)
-			);
+			result =
+				(Normal.X * value.X) +
+				(Normal.Y * value.Y) +
+				(Normal.Z * value.Z)
+			;
 		}
 
 		public void Normalize()
@@ -144,33 +138,18 @@ namespace Microsoft.Xna.Framework
 			float length = Normal.Length();
 			float factor = 1.0f / length;
 			Vector3.Multiply(ref Normal, factor, out Normal);
-			D = D * factor;
+			D *= factor;
 		}
 
-		public PlaneIntersectionType Intersects(BoundingBox box)
-		{
-			return box.Intersects(this);
-		}
+		public PlaneIntersectionType Intersects(BoundingBox box) => box.Intersects(this);
 
-		public void Intersects(ref BoundingBox box, out PlaneIntersectionType result)
-		{
-			box.Intersects(ref this, out result);
-		}
+		public void Intersects(ref BoundingBox box, out PlaneIntersectionType result) => box.Intersects(ref this, out result);
 
-		public PlaneIntersectionType Intersects(BoundingSphere sphere)
-		{
-			return sphere.Intersects(this);
-		}
+		public PlaneIntersectionType Intersects(BoundingSphere sphere) => sphere.Intersects(this);
 
-		public void Intersects(ref BoundingSphere sphere, out PlaneIntersectionType result)
-		{
-			sphere.Intersects(ref this, out result);
-		}
+		public void Intersects(ref BoundingSphere sphere, out PlaneIntersectionType result) => sphere.Intersects(ref this, out result);
 
-		public PlaneIntersectionType Intersects(BoundingFrustum frustum)
-		{
-			return frustum.Intersects(this);
-		}
+		public PlaneIntersectionType Intersects(BoundingFrustum frustum) => frustum.Intersects(this);
 
 		#endregion
 
@@ -178,8 +157,7 @@ namespace Microsoft.Xna.Framework
 
 		internal PlaneIntersectionType Intersects(ref Vector3 point)
 		{
-			float distance;
-			DotCoordinate(ref point, out distance);
+			DotCoordinate(ref point, out float distance);
 			if (distance > 0)
 			{
 				return PlaneIntersectionType.Front;
@@ -197,8 +175,7 @@ namespace Microsoft.Xna.Framework
 
 		public static Plane Normalize(Plane value)
 		{
-			Plane ret;
-			Normalize(ref value, out ret);
+			Normalize(ref value, out Plane ret);
 			return ret;
 		}
 
@@ -218,8 +195,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The transformed plane.</returns>
 		public static Plane Transform(Plane plane, Matrix matrix)
 		{
-			Plane result;
-			Transform(ref plane, ref matrix, out result);
+			Transform(ref plane, ref matrix, out Plane result);
 			return result;
 		}
 
@@ -233,23 +209,22 @@ namespace Microsoft.Xna.Framework
 			ref Plane plane,
 			ref Matrix matrix,
 			out Plane result
-		) {
+		)
+		{
 			/* See "Transforming Normals" in
 			 * http://www.glprogramming.com/red/appendixf.html
 			 * for an explanation of how this works.
 			 */
-			Matrix transformedMatrix;
-			Matrix.Invert(ref matrix, out transformedMatrix);
+			Matrix.Invert(ref matrix, out Matrix transformedMatrix);
 			Matrix.Transpose(
 				ref transformedMatrix,
 				out transformedMatrix
 			);
-			Vector4 vector = new Vector4(plane.Normal, plane.D);
-			Vector4 transformedVector;
+			var vector = new Vector4(plane.Normal, plane.D);
 			Vector4.Transform(
 				ref vector,
 				ref transformedMatrix,
-				out transformedVector
+				out Vector4 transformedVector
 			);
 			result = new Plane(transformedVector);
 		}
@@ -262,8 +237,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>The transformed plane.</returns>
 		public static Plane Transform(Plane plane, Quaternion rotation)
 		{
-			Plane result;
-			Transform(ref plane, ref rotation, out result);
+			Transform(ref plane, ref rotation, out Plane result);
 			return result;
 		}
 
@@ -277,7 +251,8 @@ namespace Microsoft.Xna.Framework
 			ref Plane plane,
 			ref Quaternion rotation,
 			out Plane result
-		) {
+		)
+		{
 			Vector3.Transform(
 				ref plane.Normal,
 				ref rotation,
@@ -300,28 +275,19 @@ namespace Microsoft.Xna.Framework
 			return plane1.Equals(plane2);
 		}
 
-		public override bool Equals(object obj)
-		{
-			return (obj is Plane) && this.Equals((Plane) obj);
-		}
+		public override bool Equals(object obj) => (obj is Plane plane) && Equals(plane);
 
-		public bool Equals(Plane other)
-		{
-			return (Normal == other.Normal && D == other.D);
-		}
+		public bool Equals(Plane other) => Normal == other.Normal && D == other.D;
 
-		public override int GetHashCode()
-		{
-			return Normal.GetHashCode() ^ D.GetHashCode();
-		}
+		public override int GetHashCode() => Normal.GetHashCode() ^ D.GetHashCode();
 
 		public override string ToString()
 		{
-			return (
+			return
 				"{Normal:" + Normal.ToString() +
 				" D:" + D.ToString() +
 				"}"
-			);
+			;
 		}
 
 		#endregion

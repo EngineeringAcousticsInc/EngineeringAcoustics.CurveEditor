@@ -8,7 +8,6 @@
 #endregion
 
 #region Using Statements
-using System;
 using System.Runtime.InteropServices;
 #endregion
 
@@ -19,14 +18,14 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		#region Private Struct uif
 
 		[StructLayout(LayoutKind.Explicit)]
-		private struct uif
+		private struct Uif
 		{
 			[FieldOffset(0)]
-			public float f;
+			public float F;
 			[FieldOffset(0)]
-			public int i;
+			public int I;
 			[FieldOffset(0)]
-			public uint u;
+			public uint U;
 		}
 
 		#endregion
@@ -35,9 +34,11 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		internal static ushort Convert(float f)
 		{
-			uif uif = new uif();
-			uif.f = f;
-			return Convert(uif.i);
+			var uif = new Uif
+			{
+				F = f
+			};
+			return Convert(uif.I);
 		}
 
 		internal static ushort Convert(int i)
@@ -50,10 +51,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			{
 				if (e < -10)
 				{
-					return (ushort) s;
+					return (ushort)s;
 				}
 
-				m = m | 0x00800000;
+				m |= 0x00800000;
 
 				int t = 14 - e;
 				int a = (1 << (t - 1)) - 1;
@@ -61,18 +62,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 				m = (m + a + b) >> t;
 
-				return (ushort) (s | m);
+				return (ushort)(s | m);
 			}
 			else if (e == 0xff - (127 - 15))
 			{
 				if (m == 0)
 				{
-					return (ushort) (s | 0x7c00);
+					return (ushort)(s | 0x7c00);
 				}
 				else
 				{
 					m >>= 13;
-					return (ushort) (s | 0x7c00 | m | ((m == 0) ? 1 : 0));
+					return (ushort)(s | 0x7c00 | m | ((m == 0) ? 1 : 0));
 				}
 			}
 			else
@@ -87,10 +88,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 				if (e > 30)
 				{
-					return (ushort) (s | 0x7c00);
+					return (ushort)(s | 0x7c00);
 				}
 
-				return (ushort) (s | (e << 10) | (m >> 13));
+				return (ushort)(s | (e << 10) | (m >> 13));
 			}
 		}
 
@@ -107,24 +108,26 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 					while ((mantissa & 1024) == 0)
 					{
 						exp--;
-						mantissa = mantissa << 1;
+						mantissa <<= 1;
 					}
 					mantissa &= 0xfffffbff;
-					rst = ((uint) ((((uint) value & 0x8000) << 16) | ((exp + 127) << 23))) | (mantissa << 13);
+					rst = (((uint)value & 0x8000) << 16) | ((exp + 127) << 23) | (mantissa << 13);
 				}
 				else
 				{
-					rst = (uint) ((value & 0x8000) << 16);
+					rst = (uint)((value & 0x8000) << 16);
 				}
 			}
 			else
 			{
-				rst = (uint) (((((uint) value & 0x8000) << 16) | ((((((uint) value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
+				rst = (((uint)value & 0x8000) << 16) | (((((uint)value >> 10) & 0x1f) - 15 + 127) << 23) | (mantissa << 13);
 			}
 
-			uif uif = new uif();
-			uif.u = rst;
-			return uif.f;
+			var uif = new Uif
+			{
+				U = rst
+			};
+			return uif.F;
 		}
 
 		#endregion

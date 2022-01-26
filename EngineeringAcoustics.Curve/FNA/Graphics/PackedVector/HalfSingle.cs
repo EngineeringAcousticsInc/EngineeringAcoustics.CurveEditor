@@ -16,17 +16,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct HalfSingle : IPackedVector<ushort>, IEquatable<HalfSingle>, IPackedVector
 	{
 		#region Public Properties
-		public ushort PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public ushort PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private ushort packedValue;
 
 		#endregion
 
@@ -34,20 +29,20 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public HalfSingle(float single)
 		{
-			packedValue = HalfTypeHelper.Convert(single);
+			PackedValue = HalfTypeHelper.Convert(single);
 		}
 
 		#endregion
 
 		#region Public Methods
 
-		public float ToSingle() => HalfTypeHelper.Convert(packedValue);
+		public float ToSingle() => HalfTypeHelper.Convert(PackedValue);
 
 		#endregion
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = HalfTypeHelper.Convert(vector.X);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = HalfTypeHelper.Convert(vector.X);
 
 		Vector4 IPackedVector.ToVector4() => new Vector4(ToSingle(), 0.0f, 0.0f, 1.0f);
 
@@ -55,22 +50,22 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Static Operators and Override Methods
 
-		public override bool Equals(object obj) => (obj is HalfSingle) && Equals((HalfSingle)obj);
+		public override bool Equals(object obj) => (obj is HalfSingle single) && Equals(single);
 
-		public bool Equals(HalfSingle other) => packedValue == other.packedValue;
+		public bool Equals(HalfSingle other) => PackedValue == other.PackedValue;
 
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
 		public static bool operator ==(HalfSingle lhs, HalfSingle rhs)
 		{
-			return lhs.packedValue == rhs.packedValue;
+			return lhs.PackedValue == rhs.PackedValue;
 		}
 
 		public static bool operator !=(HalfSingle lhs, HalfSingle rhs)
 		{
-			return lhs.packedValue != rhs.packedValue;
+			return lhs.PackedValue != rhs.PackedValue;
 		}
 
 		#endregion

@@ -35,18 +35,18 @@ namespace Microsoft.Xna.Framework.Design
 			CultureInfo culture,
 			object value,
 			Type destinationType
-		) {
+		) =>
 			// FIXME: This method exists in the spec, but... why?! -flibit
-			return base.ConvertTo(context, culture, value, destinationType);
-		}
+			base.ConvertTo(context, culture, value, destinationType);
 
 		public override object CreateInstance(
 			ITypeDescriptorContext context,
 			IDictionary propertyValues
-		) {
-			return (object) new Plane(
-				(Vector3) propertyValues["Normal"],
-				(float) propertyValues["D"]
+		)
+		{
+			return new Plane(
+				(Vector3)propertyValues["Normal"],
+				(float)propertyValues["D"]
 			);
 		}
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-using XnaCurve = Microsoft.Xna.Framework.Curve;
 using Microsoft.Xna.Framework;
 
 namespace EngineeringAcoustics.Curve
@@ -28,11 +25,9 @@ namespace EngineeringAcoustics.Curve
 
 		}
 
-		public /*ICurve. #clone*/ComplexCurve Clone()
-		{
+		public /*ICurve. #clone*/ComplexCurve Clone() =>
 			// #clone
 			throw new NotImplementedException("NYI #clone");
-		}
 
 		public float Evaluate(float position)
 		{

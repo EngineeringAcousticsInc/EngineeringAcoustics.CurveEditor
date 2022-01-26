@@ -15,7 +15,6 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 
 using Microsoft.Xna.Framework.Design;
 #endregion
@@ -35,61 +34,31 @@ namespace Microsoft.Xna.Framework
 		/// <summary>
 		/// Returns a <see cref="Vector2"/> with components 0, 0.
 		/// </summary>
-		public static Vector2 Zero
-		{
-			get
-			{
-				return zeroVector;
-			}
-		}
+		public static Vector2 Zero { get; } = new Vector2(0f, 0f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector2"/> with components 1, 1.
 		/// </summary>
-		public static Vector2 One
-		{
-			get
-			{
-				return unitVector;
-			}
-		}
+		public static Vector2 One { get; } = new Vector2(1f, 1f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector2"/> with components 1, 0.
 		/// </summary>
-		public static Vector2 UnitX
-		{
-			get
-			{
-				return unitXVector;
-			}
-		}
+		public static Vector2 UnitX { get; } = new Vector2(1f, 0f);
 
 		/// <summary>
 		/// Returns a <see cref="Vector2"/> with components 0, 1.
 		/// </summary>
-		public static Vector2 UnitY
-		{
-			get
-			{
-				return unitYVector;
-			}
-		}
+		public static Vector2 UnitY { get; } = new Vector2(0f, 1f);
 
 		#endregion
 
 		#region Internal Properties
 
-		internal string DebugDisplayString
-		{
-			get
-			{
-				return string.Concat(
+		internal string DebugDisplayString => string.Concat(
 					X.ToString(), " ",
 					Y.ToString()
 				);
-			}
-		}
 
 		#endregion
 
@@ -107,15 +76,6 @@ namespace Microsoft.Xna.Framework
 
 		#endregion
 
-		#region Private Static Fields
-
-		private static readonly Vector2 zeroVector = new Vector2(0f, 0f);
-		private static readonly Vector2 unitVector = new Vector2(1f, 1f);
-		private static readonly Vector2 unitXVector = new Vector2(1f, 0f);
-		private static readonly Vector2 unitYVector = new Vector2(0f, 1f);
-
-		#endregion
-
 		#region Public Constructors
 
 		/// <summary>
@@ -125,8 +85,8 @@ namespace Microsoft.Xna.Framework
 		/// <param name="y">The y coordinate in 2d-space.</param>
 		public Vector2(float x, float y)
 		{
-			this.X = x;
-			this.Y = y;
+			X = x;
+			Y = y;
 		}
 
 		/// <summary>
@@ -135,8 +95,8 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value">The x and y coordinates in 2d-space.</param>
 		public Vector2(float value)
 		{
-			this.X = value;
-			this.Y = value;
+			X = value;
+			Y = value;
 		}
 
 		#endregion
@@ -144,14 +104,11 @@ namespace Microsoft.Xna.Framework
 		#region Public Methods
 
 		/// <summary>
-		/// Compares whether current instance is equal to specified <see cref="Object"/>.
+		/// Compares whether current instance is equal to specified <see cref="object"/>.
 		/// </summary>
-		/// <param name="obj">The <see cref="Object"/> to compare.</param>
+		/// <param name="obj">The <see cref="object"/> to compare.</param>
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-		public override bool Equals(object obj)
-		{
-			return (obj is Vector2) && Equals((Vector2) obj);
-		}
+		public override bool Equals(object obj) => (obj is Vector2 vector) && Equals(vector);
 
 		/// <summary>
 		/// Compares whether current instance is equal to specified <see cref="Vector2"/>.
@@ -160,59 +117,50 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public bool Equals(Vector2 other)
 		{
-			return (	X == other.X &&
-					Y == other.Y	);
+			return X == other.X &&
+					Y == other.Y;
 		}
 
 		/// <summary>
 		/// Gets the hash code of this <see cref="Vector2"/>.
 		/// </summary>
 		/// <returns>Hash code of this <see cref="Vector2"/>.</returns>
-		public override int GetHashCode()
-		{
-			return X.GetHashCode() + Y.GetHashCode();
-		}
+		public override int GetHashCode() => X.GetHashCode() + Y.GetHashCode();
 
 		/// <summary>
 		/// Returns the length of this <see cref="Vector2"/>.
 		/// </summary>
 		/// <returns>The length of this <see cref="Vector2"/>.</returns>
-		public float Length()
-		{
-			return (float) Math.Sqrt((X * X) + (Y * Y));
-		}
+		public float Length() => (float)Math.Sqrt((X * X) + (Y * Y));
 
 		/// <summary>
 		/// Returns the squared length of this <see cref="Vector2"/>.
 		/// </summary>
 		/// <returns>The squared length of this <see cref="Vector2"/>.</returns>
-		public float LengthSquared()
-		{
-			return (X * X) + (Y * Y);
-		}
+		public float LengthSquared() => (X * X) + (Y * Y);
 
 		/// <summary>
 		/// Turns this <see cref="Vector2"/> to a unit vector with the same direction.
 		/// </summary>
 		public void Normalize()
 		{
-			float val = 1.0f / (float) Math.Sqrt((X * X) + (Y * Y));
+			float val = 1.0f / (float)Math.Sqrt((X * X) + (Y * Y));
 			X *= val;
 			Y *= val;
 		}
 
 		/// <summary>
-		/// Returns a <see cref="String"/> representation of this <see cref="Vector2"/> in the format:
+		/// Returns a <see cref="string"/> representation of this <see cref="Vector2"/> in the format:
 		/// {X:[<see cref="X"/>] Y:[<see cref="Y"/>]}
 		/// </summary>
-		/// <returns>A <see cref="String"/> representation of this <see cref="Vector2"/>.</returns>
+		/// <returns>A <see cref="string"/> representation of this <see cref="Vector2"/>.</returns>
 		public override string ToString()
 		{
-			return (
+			return
 				"{X:" + X.ToString() +
 				" Y:" + Y.ToString() +
 				"}"
-			);
+			;
 		}
 
 		#endregion
@@ -261,7 +209,8 @@ namespace Microsoft.Xna.Framework
 			Vector2 value3,
 			float amount1,
 			float amount2
-		) {
+		)
+		{
 			return new Vector2(
 				MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
 				MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2)
@@ -284,7 +233,8 @@ namespace Microsoft.Xna.Framework
 			float amount1,
 			float amount2,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2);
 			result.Y = MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2);
 		}
@@ -304,7 +254,8 @@ namespace Microsoft.Xna.Framework
 			Vector2 value3,
 			Vector2 value4,
 			float amount
-		) {
+		)
+		{
 			return new Vector2(
 				MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
 				MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount)
@@ -327,7 +278,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value4,
 			float amount,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount);
 			result.Y = MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount);
 		}
@@ -359,7 +311,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 min,
 			ref Vector2 max,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.Clamp(value1.X, min.X, max.X);
 			result.Y = MathHelper.Clamp(value1.Y, min.Y, max.Y);
 		}
@@ -373,7 +326,7 @@ namespace Microsoft.Xna.Framework
 		public static float Distance(Vector2 value1, Vector2 value2)
 		{
 			float v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
-			return (float) Math.Sqrt((v1 * v1) + (v2 * v2));
+			return (float)Math.Sqrt((v1 * v1) + (v2 * v2));
 		}
 
 		/// <summary>
@@ -385,7 +338,7 @@ namespace Microsoft.Xna.Framework
 		public static void Distance(ref Vector2 value1, ref Vector2 value2, out float result)
 		{
 			float v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
-			result = (float) Math.Sqrt((v1 * v1) + (v2 * v2));
+			result = (float)Math.Sqrt((v1 * v1) + (v2 * v2));
 		}
 
 		/// <summary>
@@ -410,7 +363,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value1,
 			ref Vector2 value2,
 			out float result
-		) {
+		)
+		{
 			float v1 = value1.X - value2.X, v2 = value1.Y - value2.Y;
 			result = (v1 * v1) + (v2 * v2);
 		}
@@ -473,10 +427,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">The first vector.</param>
 		/// <param name="value2">The second vector.</param>
 		/// <returns>The dot product of two vectors.</returns>
-		public static float Dot(Vector2 value1, Vector2 value2)
-		{
-			return (value1.X * value2.X) + (value1.Y * value2.Y);
-		}
+		public static float Dot(Vector2 value1, Vector2 value2) => (value1.X * value2.X) + (value1.Y * value2.Y);
 
 		/// <summary>
 		/// Returns a dot product of two vectors.
@@ -484,10 +435,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">The first vector.</param>
 		/// <param name="value2">The second vector.</param>
 		/// <param name="result">The dot product of two vectors as an output parameter.</param>
-		public static void Dot(ref Vector2 value1, ref Vector2 value2, out float result)
-		{
-			result = (value1.X * value2.X) + (value1.Y * value2.Y);
-		}
+		public static void Dot(ref Vector2 value1, ref Vector2 value2, out float result) => result = (value1.X * value2.X) + (value1.Y * value2.Y);
 
 		/// <summary>
 		/// Creates a new <see cref="Vector2"/> that contains hermite spline interpolation.
@@ -504,9 +452,9 @@ namespace Microsoft.Xna.Framework
 			Vector2 value2,
 			Vector2 tangent2,
 			float amount
-		) {
-			Vector2 result = new Vector2();
-			Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
+		)
+		{
+			Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out Vector2 result);
 			return result;
 		}
 
@@ -526,7 +474,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 tangent2,
 			float amount,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount);
 			result.Y = MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount);
 		}
@@ -558,7 +507,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value2,
 			float amount,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.Lerp(value1.X, value2.X, amount);
 			result.Y = MathHelper.Lerp(value1.Y, value2.Y, amount);
 		}
@@ -697,7 +647,7 @@ namespace Microsoft.Xna.Framework
 		/// <returns>Unit vector.</returns>
 		public static Vector2 Normalize(Vector2 value)
 		{
-			float val = 1.0f / (float) Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
+			float val = 1.0f / (float)Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
 			value.X *= val;
 			value.Y *= val;
 			return value;
@@ -710,7 +660,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="result">Unit vector as an output parameter.</param>
 		public static void Normalize(ref Vector2 value, out Vector2 result)
 		{
-			float val = 1.0f / (float) Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
+			float val = 1.0f / (float)Math.Sqrt((value.X * value.X) + (value.Y * value.Y));
 			result.X = value.X * val;
 			result.Y = value.Y * val;
 		}
@@ -770,7 +720,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value2,
 			float amount,
 			out Vector2 result
-		) {
+		)
+		{
 			result.X = MathHelper.SmoothStep(value1.X, value2.X, amount);
 			result.Y = MathHelper.SmoothStep(value1.Y, value2.Y, amount);
 		}
@@ -824,7 +775,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 position,
 			ref Matrix matrix,
 			out Vector2 result
-		) {
+		)
+		{
 			float x = (position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41;
 			float y = (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42;
 			result.X = x;
@@ -853,13 +805,14 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 value,
 			ref Quaternion rotation,
 			out Vector2 result
-		) {
+		)
+		{
 			float x = 2 * -(rotation.Z * value.Y);
 			float y = 2 * (rotation.Z * value.X);
-			float z = 2 * (rotation.X * value.Y - rotation.Y * value.X);
+			float z = 2 * ((rotation.X * value.Y) - (rotation.Y * value.X));
 
-			result.X = value.X + x * rotation.W + (rotation.Y * z - rotation.Z * y);
-			result.Y = value.Y + y * rotation.W + (rotation.Z * x - rotation.X * z);
+			result.X = value.X + (x * rotation.W) + ((rotation.Y * z) - (rotation.Z * y));
+			result.Y = value.Y + (y * rotation.W) + ((rotation.Z * x) - (rotation.X * z));
 		}
 
 		/// <summary>
@@ -872,9 +825,7 @@ namespace Microsoft.Xna.Framework
 			Vector2[] sourceArray,
 			ref Matrix matrix,
 			Vector2[] destinationArray
-		) {
-			Transform(sourceArray, 0, ref matrix, destinationArray, 0, sourceArray.Length);
-		}
+		) => Transform(sourceArray, 0, ref matrix, destinationArray, 0, sourceArray.Length);
 
 		/// <summary>
 		/// Apply transformation on vectors within array of <see cref="Vector2"/> by the specified <see cref="Matrix"/> and places the results in an another array.
@@ -892,7 +843,8 @@ namespace Microsoft.Xna.Framework
 			Vector2[] destinationArray,
 			int destinationIndex,
 			int length
-		) {
+		)
+		{
 			for (int x = 0; x < length; x += 1)
 			{
 				Vector2 position = sourceArray[sourceIndex + x];
@@ -915,7 +867,8 @@ namespace Microsoft.Xna.Framework
 			Vector2[] sourceArray,
 			ref Quaternion rotation,
 			Vector2[] destinationArray
-		) {
+		)
+		{
 			Transform(
 				sourceArray,
 				0,
@@ -942,12 +895,12 @@ namespace Microsoft.Xna.Framework
 			Vector2[] destinationArray,
 			int destinationIndex,
 			int length
-		) {
+		)
+		{
 			for (int i = 0; i < length; i += 1)
 			{
 				Vector2 position = sourceArray[sourceIndex + i];
-				Vector2 v;
-				Transform(ref position, ref rotation, out v);
+				Transform(ref position, ref rotation, out Vector2 v);
 				destinationArray[destinationIndex + i] = v;
 			}
 		}
@@ -976,7 +929,8 @@ namespace Microsoft.Xna.Framework
 			ref Vector2 normal,
 			ref Matrix matrix,
 			out Vector2 result
-		) {
+		)
+		{
 			float x = (normal.X * matrix.M11) + (normal.Y * matrix.M21);
 			float y = (normal.X * matrix.M12) + (normal.Y * matrix.M22);
 			result.X = x;
@@ -993,7 +947,8 @@ namespace Microsoft.Xna.Framework
 			Vector2[] sourceArray,
 			ref Matrix matrix,
 			Vector2[] destinationArray
-		) {
+		)
+		{
 			TransformNormal(
 				sourceArray,
 				0,
@@ -1020,7 +975,8 @@ namespace Microsoft.Xna.Framework
 			Vector2[] destinationArray,
 			int destinationIndex,
 			int length
-		) {
+		)
+		{
 			for (int i = 0; i < length; i += 1)
 			{
 				Vector2 position = sourceArray[sourceIndex + i];
@@ -1055,8 +1011,8 @@ namespace Microsoft.Xna.Framework
 		/// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
 		public static bool operator ==(Vector2 value1, Vector2 value2)
 		{
-			return (	value1.X == value2.X &&
-					value1.Y == value2.Y	);
+			return value1.X == value2.X &&
+					value1.Y == value2.Y;
 		}
 
 		/// <summary>

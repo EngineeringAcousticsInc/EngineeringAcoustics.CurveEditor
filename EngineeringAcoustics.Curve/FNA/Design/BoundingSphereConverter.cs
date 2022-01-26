@@ -34,28 +34,27 @@ namespace Microsoft.Xna.Framework.Design
 			ITypeDescriptorContext context,
 			CultureInfo culture,
 			object value
-		) {
+		) =>
 			// FIXME: This method exists in the spec, but... why?! -flibit
-			return base.ConvertFrom(context, culture, value);
-		}
+			base.ConvertFrom(context, culture, value);
 
 		public override object ConvertTo(
 			ITypeDescriptorContext context,
 			CultureInfo culture,
 			object value,
 			Type destinationType
-		) {
+		) =>
 			// FIXME: This method exists in the spec, but... why?! -flibit
-			return base.ConvertTo(context, culture, value, destinationType);
-		}
+			base.ConvertTo(context, culture, value, destinationType);
 
 		public override object CreateInstance(
 			ITypeDescriptorContext context,
 			IDictionary propertyValues
-		) {
-			return (object) new BoundingSphere(
-				(Vector3) propertyValues["Center"],
-				(float) propertyValues["Radius"]
+		)
+		{
+			return new BoundingSphere(
+				(Vector3)propertyValues["Center"],
+				(float)propertyValues["Radius"]
 			);
 		}
 

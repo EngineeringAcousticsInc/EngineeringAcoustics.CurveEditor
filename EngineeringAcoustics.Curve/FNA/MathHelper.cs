@@ -27,7 +27,7 @@ namespace Microsoft.Xna.Framework
 		/// <summary>
 		/// Represents the mathematical constant e(2.71828175).
 		/// </summary>
-		public const float E = (float) Math.E;
+		public const float E = (float)Math.E;
 
 		/// <summary>
 		/// Represents the log base ten of e(0.4342945).
@@ -42,22 +42,22 @@ namespace Microsoft.Xna.Framework
 		/// <summary>
 		/// Represents the value of pi(3.14159274).
 		/// </summary>
-		public const float Pi = (float) Math.PI;
+		public const float Pi = (float)Math.PI;
 
 		/// <summary>
 		/// Represents the value of pi divided by two(1.57079637).
 		/// </summary>
-		public const float PiOver2 = (float) (Math.PI / 2.0);
+		public const float PiOver2 = (float)(Math.PI / 2.0);
 
 		/// <summary>
 		/// Represents the value of pi divided by four(0.7853982).
 		/// </summary>
-		public const float PiOver4 = (float) (Math.PI / 4.0);
+		public const float PiOver4 = (float)(Math.PI / 4.0);
 
 		/// <summary>
 		/// Represents the value of pi times two(6.28318548).
 		/// </summary>
-		public const float TwoPi = (float) (Math.PI * 2.0);
+		public const float TwoPi = (float)(Math.PI * 2.0);
 
 		#endregion
 
@@ -99,9 +99,7 @@ namespace Microsoft.Xna.Framework
 			float value3,
 			float amount1,
 			float amount2
-		) {
-			return value1 + (value2 - value1) * amount1 + (value3 - value1) * amount2;
-		}
+		) => value1 + ((value2 - value1) * amount1) + ((value3 - value1) * amount2);
 
 		/// <summary>
 		/// Performs a Catmull-Rom interpolation using the specified positions.
@@ -118,19 +116,20 @@ namespace Microsoft.Xna.Framework
 			float value3,
 			float value4,
 			float amount
-		) {
+		)
+		{
 			/* Using formula from http://www.mvps.org/directx/articles/catmull/
 			 * Internally using doubles not to lose precision.
 			 */
 			double amountSquared = amount * amount;
 			double amountCubed = amountSquared * amount;
-			return (float) (
+			return (float)(
 				0.5 *
-				(
-					((2.0 * value2 + (value3 - value1) * amount) +
-					((2.0 * value1 - 5.0 * value2 + 4.0 * value3 - value4) * amountSquared) +
-					(3.0 * value2 - value1 - 3.0 * value3 + value4) * amountCubed)
-				)
+				
+					((2.0 * value2) + ((value3 - value1) * amount) +
+					(((2.0 * value1) - (5.0 * value2) + (4.0 * value3) - value4) * amountSquared) +
+					(((3.0 * value2) - value1 - (3.0 * value3) + value4) * amountCubed))
+				
 			);
 		}
 
@@ -165,10 +164,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">Source value.</param>
 		/// <param name="value2">Source value.</param>
 		/// <returns>Distance between the two values.</returns>
-		public static float Distance(float value1, float value2)
-		{
-			return Math.Abs(value1 - value2);
-		}
+		public static float Distance(float value1, float value2) => Math.Abs(value1 - value2);
 
 		/// <summary>
 		/// Performs a Hermite spline interpolation.
@@ -185,7 +181,8 @@ namespace Microsoft.Xna.Framework
 			float value2,
 			float tangent2,
 			float amount
-		) {
+		)
+		{
 			/* All transformed to double not to lose precision
 			 * Otherwise, for high numbers of param:amount the result is NaN instead
 			 * of Infinity.
@@ -195,25 +192,16 @@ namespace Microsoft.Xna.Framework
 			double sCubed = s * s * s;
 			double sSquared = s * s;
 
-			if (WithinEpsilon(amount, 0f))
-			{
-				result = value1;
-			}
-			else if (WithinEpsilon(amount, 1f))
-			{
-				result = value2;
-			}
-			else
-			{
-				result = (
-					((2 * v1 - 2 * v2 + t2 + t1) * sCubed) +
-					((3 * v2 - 3 * v1 - 2 * t1 - t2) * sSquared) +
-					(t1 * s) +
-					v1
-				);
-			}
+			result = WithinEpsilon(amount, 0f)
+				? value1
+				: WithinEpsilon(amount, 1f)
+					? value2
+					: (((2 * v1) - (2 * v2) + t2 + t1) * sCubed) +
+									(((3 * v2) - (3 * v1) - (2 * t1) - t2) * sSquared) +
+									(t1 * s) +
+									v1;
 
-			return (float) result;
+			return (float)result;
 		}
 
 
@@ -232,10 +220,7 @@ namespace Microsoft.Xna.Framework
 		/// Passing amount a value of 0 will cause value1 to be returned, a value of 1 will
 		/// cause value2 to be returned.
 		/// </remarks>
-		public static float Lerp(float value1, float value2, float amount)
-		{
-			return value1 + (value2 - value1) * amount;
-		}
+		public static float Lerp(float value1, float value2, float amount) => value1 + ((value2 - value1) * amount);
 
 		/// <summary>
 		/// Returns the greater of two values.
@@ -243,10 +228,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">Source value.</param>
 		/// <param name="value2">Source value.</param>
 		/// <returns>The greater value.</returns>
-		public static float Max(float value1, float value2)
-		{
-			return value1 > value2 ? value1 : value2;
-		}
+		public static float Max(float value1, float value2) => value1 > value2 ? value1 : value2;
 
 		/// <summary>
 		/// Returns the lesser of two values.
@@ -254,10 +236,7 @@ namespace Microsoft.Xna.Framework
 		/// <param name="value1">Source value.</param>
 		/// <param name="value2">Source value.</param>
 		/// <returns>The lesser value.</returns>
-		public static float Min(float value1, float value2)
-		{
-			return value1 < value2 ? value1 : value2;
-		}
+		public static float Min(float value1, float value2) => value1 < value2 ? value1 : value2;
 
 		/// <summary>
 		/// Interpolates between two values using a cubic equation.
@@ -287,10 +266,7 @@ namespace Microsoft.Xna.Framework
 		/// This method uses double precision internally, though it returns single float.
 		/// Factor = 180 / pi
 		/// </remarks>
-		public static float ToDegrees(float radians)
-		{
-			return (float) (radians * 57.295779513082320876798154814105);
-		}
+		public static float ToDegrees(float radians) => (float)(radians * 57.295779513082320876798154814105);
 
 		/// <summary>
 		/// Converts degrees to radians.
@@ -301,10 +277,7 @@ namespace Microsoft.Xna.Framework
 		/// This method uses double precision internally, though it returns single float.
 		/// Factor = pi / 180
 		/// </remarks>
-		public static float ToRadians(float degrees)
-		{
-			return (float) (degrees * 0.017453292519943295769236907684886);
-		}
+		public static float ToRadians(float degrees) => (float)(degrees * 0.017453292519943295769236907684886);
 
 		/// <summary>
 		/// Reduces a given angle to a value between pi and -pi.
@@ -354,10 +327,7 @@ namespace Microsoft.Xna.Framework
 			return value;
 		}
 
-		internal static bool WithinEpsilon(float floatA, float floatB)
-		{
-			return Math.Abs(floatA - floatB) < MachineEpsilonFloat;
-		}
+		internal static bool WithinEpsilon(float floatA, float floatB) => Math.Abs(floatA - floatB) < MachineEpsilonFloat;
 
 		internal static int ClosestMSAAPower(int value)
 		{

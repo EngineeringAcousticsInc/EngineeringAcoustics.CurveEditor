@@ -16,17 +16,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 	public struct HalfVector2 : IPackedVector<uint>, IPackedVector, IEquatable<HalfVector2>
 	{
 		#region Public Properties
-		public uint PackedValue
-		{
-			get => packedValue;
-			set => packedValue = value;
-		}
+		public uint PackedValue { get; set; }
 
 		#endregion
 
 		#region Private Variables
 
-		private uint packedValue;
 
 		#endregion
 
@@ -34,12 +29,12 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public HalfVector2(float x, float y)
 		{
-			packedValue = PackHelper(x, y);
+			PackedValue = PackHelper(x, y);
 		}
 
 		public HalfVector2(Vector2 vector)
 		{
-			packedValue = PackHelper(vector.X, vector.Y);
+			PackedValue = PackHelper(vector.X, vector.Y);
 		}
 
 		#endregion
@@ -49,8 +44,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		public Vector2 ToVector2()
 		{
 			Vector2 vector;
-			vector.X = HalfTypeHelper.Convert((ushort)packedValue);
-			vector.Y = HalfTypeHelper.Convert((ushort)(packedValue >> 0x10));
+			vector.X = HalfTypeHelper.Convert((ushort)PackedValue);
+			vector.Y = HalfTypeHelper.Convert((ushort)(PackedValue >> 0x10));
 			return vector;
 		}
 
@@ -58,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region IPackedVector Methods
 
-		void IPackedVector.PackFromVector4(Vector4 vector) => packedValue = PackHelper(vector.X, vector.Y);
+		void IPackedVector.PackFromVector4(Vector4 vector) => PackedValue = PackHelper(vector.X, vector.Y);
 
 		Vector4 IPackedVector.ToVector4() => new Vector4(ToVector2(), 0.0f, 1.0f);
 
@@ -66,13 +61,13 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		#region Public Static Operators and Override Methods
 
-		public override string ToString() => packedValue.ToString("X");
+		public override string ToString() => PackedValue.ToString("X");
 
-		public override int GetHashCode() => packedValue.GetHashCode();
+		public override int GetHashCode() => PackedValue.GetHashCode();
 
-		public override bool Equals(object obj) => ((obj is HalfVector2) && Equals((HalfVector2)obj));
+		public override bool Equals(object obj) => (obj is HalfVector2 vector) && Equals(vector);
 
-		public bool Equals(HalfVector2 other) => packedValue.Equals(other.packedValue);
+		public bool Equals(HalfVector2 other) => PackedValue.Equals(other.PackedValue);
 
 		public static bool operator ==(HalfVector2 a, HalfVector2 b)
 		{

@@ -28,13 +28,7 @@ namespace Microsoft.Xna.Framework
 		/// <summary>
 		/// Returns <c>true</c> if this curve is constant (has zero or one points); <c>false</c> otherwise.
 		/// </summary>
-		public bool IsConstant
-		{
-			get
-			{
-				return Keys.Count <= 1;
-			}
-		}
+		public bool IsConstant => Keys.Count <= 1;
 
 		/// <summary>
 		/// The collection of curve keys.
@@ -94,9 +88,11 @@ namespace Microsoft.Xna.Framework
 		/// <returns>A copy of this curve.</returns>
 		public Curve Clone()
 		{
-			Curve curve = new Curve(Keys.Clone());
-			curve.PreLoop = PreLoop;
-			curve.PostLoop = PostLoop;
+			var curve = new Curve(Keys.Clone())
+			{
+				PreLoop = PreLoop,
+				PostLoop = PostLoop
+			};
 			return curve;
 		}
 
@@ -121,14 +117,14 @@ namespace Microsoft.Xna.Framework
 
 			if (position < first.Position)
 			{
-				switch (this.PreLoop)
+				switch (PreLoop)
 				{
 					case CurveLoopType.Constant:
 						return first.Value;
 
 					case CurveLoopType.Linear:
 						// Linear y = a*x +b with a tangent of last point.
-						return first.Value - first.TangentIn * (first.Position - position);
+						return first.Value - (first.TangentIn * (first.Position - position));
 
 					case CurveLoopType.Cycle:
 						// Start -> end / start -> end...
@@ -142,36 +138,31 @@ namespace Microsoft.Xna.Framework
 						 */
 						cycle = GetNumberOfCycle(position);
 						virtualPos = position - (cycle * (last.Position - first.Position));
-						return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+						return GetCurvePosition(virtualPos) + (cycle * (last.Value - first.Value));
 
 					case CurveLoopType.Oscillate:
 						/* Go back on curve from end and target start
 						 * Start-> end / end -> start...
 						 */
 						cycle = GetNumberOfCycle(position);
-						
-						if (0 == cycle % 2f)
-						{
-							virtualPos = position - (cycle * (last.Position - first.Position));
-						}
-						else
-						{
-							virtualPos = last.Position - position + first.Position + (cycle * (last.Position - first.Position));
-						}
+
+						virtualPos = 0 == cycle % 2f
+							? position - (cycle * (last.Position - first.Position))
+							: last.Position - position + first.Position + (cycle * (last.Position - first.Position));
 						return GetCurvePosition(virtualPos);
 				}
 			}
 			else if (position > last.Position)
 			{
 				int cycle;
-				switch (this.PostLoop)
+				switch (PostLoop)
 				{
 					case CurveLoopType.Constant:
 						return last.Value;
 
 					case CurveLoopType.Linear:
 						// Linear y = a*x +b with a tangent of last point.
-						return last.Value + first.TangentOut * (position - last.Position);
+						return last.Value + (first.TangentOut * (position - last.Position));
 
 					case CurveLoopType.Cycle:
 						// Start -> end / start -> end...
@@ -185,26 +176,20 @@ namespace Microsoft.Xna.Framework
 						 */
 						cycle = GetNumberOfCycle(position);
 						virtualPos = position - (cycle * (last.Position - first.Position));
-						return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+						return GetCurvePosition(virtualPos) + (cycle * (last.Value - first.Value));
 
 					case CurveLoopType.Oscillate:
 						/* Go back on curve from end and target start.
 						 * Start-> end / end -> start...
 						 */
 						cycle = GetNumberOfCycle(position);
-						virtualPos = position - (cycle * (last.Position - first.Position));
+						_ = position - (cycle * (last.Position - first.Position));
 
-						if (0 == cycle % 2f)
-						{
-							virtualPos = position - (cycle * (last.Position - first.Position));
-						}
-						else
-						{
-							virtualPos =
-								last.Position - position + first.Position +
+						virtualPos = 0 == cycle % 2f
+							? position - (cycle * (last.Position - first.Position))
+							: last.Position - position + first.Position +
 								(cycle * (last.Position - first.Position)
 							);
-						}
 						return GetCurvePosition(virtualPos);
 				}
 			}
@@ -217,10 +202,7 @@ namespace Microsoft.Xna.Framework
 		/// Computes tangents for all keys in the collection.
 		/// </summary>
 		/// <param name="tangentType">The tangent type for both in and out.</param>
-		public void ComputeTangents(CurveTangent tangentType)
-		{
-			ComputeTangents(tangentType, tangentType);
-		}
+		public void ComputeTangents(CurveTangent tangentType) => ComputeTangents(tangentType, tangentType);
 
 		/// <summary>
 		/// Computes tangents for all keys in the collection.
@@ -240,10 +222,7 @@ namespace Microsoft.Xna.Framework
 		/// </summary>
 		/// <param name="keyIndex">The index of a key in the collection.</param>
 		/// <param name="tangentType">The tangent type for both in and out.</param>
-		public void ComputeTangent(int keyIndex, CurveTangent tangentType)
-		{
-			ComputeTangent(keyIndex, tangentType, tangentType);
-		}
+		public void ComputeTangent(int keyIndex, CurveTangent tangentType) => ComputeTangent(keyIndex, tangentType, tangentType);
 
 		/// <summary>
 		/// Computes tangent for the specific key in the collection.
@@ -255,7 +234,8 @@ namespace Microsoft.Xna.Framework
 			int keyIndex,
 			CurveTangent tangentInType,
 			CurveTangent tangentOutType
-		) {
+		)
+		{
 			// See http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.curvetangent.aspx
 
 			CurveKey key = Keys[keyIndex];
@@ -272,7 +252,7 @@ namespace Microsoft.Xna.Framework
 				v0 = Keys[keyIndex - 1].Value;
 			}
 
-			if (keyIndex < Keys.Count-1)
+			if (keyIndex < Keys.Count - 1)
 			{
 				p1 = Keys[keyIndex + 1].Position;
 				v1 = Keys[keyIndex + 1].Value;
@@ -288,14 +268,7 @@ namespace Microsoft.Xna.Framework
 					break;
 				case CurveTangent.Smooth:
 					float pn = p1 - p0;
-					if (MathHelper.WithinEpsilon(pn, 0.0f))
-					{
-						key.TangentIn = 0;
-					}
-					else
-					{
-						key.TangentIn = (v1 - v0) * ((p - p0) / pn);
-					}
+					key.TangentIn = MathHelper.WithinEpsilon(pn, 0.0f) ? 0 : (v1 - v0) * ((p - p0) / pn);
 					break;
 			}
 
@@ -309,14 +282,7 @@ namespace Microsoft.Xna.Framework
 					break;
 				case CurveTangent.Smooth:
 					float pn = p1 - p0;
-					if (Math.Abs(pn) < float.Epsilon)
-					{
-						key.TangentOut = 0;
-					}
-					else
-					{
-						key.TangentOut = (v1 - v0) * ((p1 - p) / pn);
-					}
+					key.TangentOut = Math.Abs(pn) < float.Epsilon ? 0 : (v1 - v0) * ((p1 - p) / pn);
 					break;
 			}
 		}
@@ -333,7 +299,7 @@ namespace Microsoft.Xna.Framework
 			{
 				cycle -= 1;
 			}
-			return (int) cycle;
+			return (int)cycle;
 		}
 
 		private float GetCurvePosition(float position)
@@ -355,10 +321,10 @@ namespace Microsoft.Xna.Framework
 						return prev.Value;
 					}
 					// To have t in [0,1]
-					float t = (
+					float t =
 						(position - prev.Position) /
 						(next.Position - prev.Position)
-					);
+					;
 					float ts = t * t;
 					float tss = ts * t;
 					/* After a lot of search on internet I have found all about
@@ -370,12 +336,12 @@ namespace Microsoft.Xna.Framework
 					 * with P0.value = prev.value , m0 = prev.tangentOut,
 					 *      P1= next.value, m1 = next.TangentIn.
 					 */
-					return (
-						(2 * tss - 3 * ts + 1f) * prev.Value +
-						(tss - 2 * ts + t) * prev.TangentOut +
-						(3 * ts - 2 * tss) * next.Value +
-						(tss - ts) * next.TangentIn
-					);
+					return
+						(((2 * tss) - (3 * ts) + 1f) * prev.Value) +
+						((tss - (2 * ts) + t) * prev.TangentOut) +
+						(((3 * ts) - (2 * tss)) * next.Value) +
+						((tss - ts) * next.TangentIn)
+					;
 				}
 				prev = next;
 			}
